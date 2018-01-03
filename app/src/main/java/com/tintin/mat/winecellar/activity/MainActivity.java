@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             carteVinsFrance();
         }else if (id == R.id.nav_millesimes){
             millesimesVinsFrance();
+        }else if (id == R.id.nav_manage){
+            options();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -257,6 +259,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void millesimesVinsFrance(){
         Intent appel = new Intent(MainActivity.this, MillesimesVinsFranceActivity.class);
+        startActivity(appel);
+    }
+
+    private void options(){
+        Intent appel = new Intent(MainActivity.this, OptionsActivity.class);
         startActivity(appel);
     }
 

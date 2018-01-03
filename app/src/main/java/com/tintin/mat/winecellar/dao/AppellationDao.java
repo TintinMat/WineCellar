@@ -3,10 +3,8 @@ package com.tintin.mat.winecellar.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.tintin.mat.winecellar.bo.Appellation;
-import com.tintin.mat.winecellar.bo.Pays;
 import com.tintin.mat.winecellar.bo.Region;
 
 import java.util.ArrayList;
@@ -51,6 +49,43 @@ public class AppellationDao extends DAOBase {
         ArrayList<Appellation> listAppellations = new ArrayList<Appellation>();
         open();
         String whereClause = " WHERE "+TABLE_NAME+"."+FK_REGION+"="+region.getId();
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                Appellation appellation = new Appellation();
+                appellation.setNom(cursor.getString(cursor.getColumnIndex(NOM)));
+                appellation.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                listAppellations.add(appellation);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listAppellations;
+    }
+
+    public ArrayList<Appellation> getAll(){
+        ArrayList<Appellation> listAppellations = new ArrayList<Appellation>();
+        open();
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME, null);
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                Appellation appellation = new Appellation();
+                appellation.setNom(cursor.getString(cursor.getColumnIndex(NOM)));
+                appellation.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                listAppellations.add(appellation);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listAppellations;
+    }
+
+    public ArrayList<Appellation> getByName(String name){
+        ArrayList<Appellation> listAppellations = new ArrayList<Appellation>();
+        open();
+        String whereClause = " WHERE LOWER("+TABLE_NAME+"."+NOM+")='"+name.toLowerCase()+"'";
         Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
         if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
             do {

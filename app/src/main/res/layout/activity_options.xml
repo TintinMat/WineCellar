@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tintin.mat.winecellar.activity.OptionsActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="25dp">
+
+    <TextView
+        android:id="@+id/AjouterDonneesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_generalites"
+        android:textStyle="bold|italic"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="0dp"
+        />
+
+    <TextView
+        android:id="@+id/ajouterPaysTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_ajouter_pays"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AjouterDonneesTextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
+
+    <AutoCompleteTextView
+        android:id="@+id/ajouterPaysAutoCompleteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ajouterPaysTextView"
+        android:inputType="text"
+        android:ems="8"
+        android:completionThreshold="1"/>
+
+    <TextView
+        android:id="@+id/ajouterRegionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_ajouter_region"
+        app:layout_constraintTop_toBottomOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/ajouterRegionAutoCompleteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ajouterRegionTextView"
+        />
+
+    <TextView
+        android:id="@+id/ajouterAppellationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_ajouter_appellation"
+        app:layout_constraintTop_toBottomOf="@+id/ajouterRegionAutoCompleteTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/ajouterAppellationAutoCompleteTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/ajouterAppellationTextView"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

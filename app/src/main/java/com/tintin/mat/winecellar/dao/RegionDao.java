@@ -3,8 +3,6 @@ package com.tintin.mat.winecellar.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.tintin.mat.winecellar.bo.Pays;
 import com.tintin.mat.winecellar.bo.Region;
@@ -66,5 +64,41 @@ public class RegionDao extends DAOBase {
         return listRegions;
     }
 
+    public ArrayList<Region> getAll(){
+        ArrayList<Region> listRegions = new ArrayList<Region>();
+        open();
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME, null);
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                Region region = new Region();
+                region.setNom(cursor.getString(cursor.getColumnIndex(NOM)));
+                region.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                listRegions.add(region);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listRegions;
+    }
+
+    public ArrayList<Region> getByName(String name){
+        ArrayList<Region> listRegions = new ArrayList<Region>();
+        open();
+        String whereClause = " WHERE LOWER("+TABLE_NAME+"."+NOM+")='"+name.toLowerCase()+"'";
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                Region region = new Region();
+                region.setNom(cursor.getString(cursor.getColumnIndex(NOM)));
+                region.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                listRegions.add(region);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listRegions;
+    }
 
 }

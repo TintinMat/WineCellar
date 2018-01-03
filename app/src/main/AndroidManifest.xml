@@ -64,6 +64,11 @@
             android:name=".activity.MillesimesVinsFranceActivity"
             android:label="@string/modif_bottle">
         </activity>
+        <activity
+            android:name=".activity.OptionsActivity"
+            android:label="@string/modif_bottle">
+        </activity>
+
 
     </application>
 

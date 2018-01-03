@@ -18,6 +18,7 @@
     <string name="toolbar_home">Mes caves</string>
     <string name="toolbar_cave_modif">Modifier la cave</string>
     <string name="toolbar_cave_nouvelle">Nouvelle cave</string>
+    <string name="toolbar_options">Options</string>
     <string name="toolbar_bouteille_nouvelle">Ajouter une bouteille</string>
     <string name="toolbar_bouteille_modifier">Modifier la bouteille</string>
     <string name="toolbar_bouteilles_degustees">Bouteilles Dégustées</string>
@@ -48,6 +49,18 @@
     <string name="message_creation_cave_arg_manquant">Tous les champs sont obligatoires</string>
     <!-- menu nouvelle cave -->
     <string name="create_cellar">Créer la cave</string>
+
+
+    <!-- page options -->
+    <string name="text_view_ajouter_pays">Ajouter/Choisir Pays</string>
+    <string name="text_view_ajouter_region">Ajouter/Choisir Région</string>
+    <string name="text_view_ajouter_appellation">Ajouter/Choisir Appellation</string>
+    <string name="text_view_ajouter_donnnees"><u>Ajouter des Données</u></string>
+    <string name="message_ajouter_donnees_ok">Nouvelles données ajoutées</string>
+    <!-- menu options -->
+    <string name="add_options">Ajouter les données</string>
+
+
 
     <!-- page visualiser cave (on voit les clayettes) -->
     <string name="edit_cellar">Modifier la cave</string>

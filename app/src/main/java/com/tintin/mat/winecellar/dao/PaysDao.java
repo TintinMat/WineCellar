@@ -58,4 +58,22 @@ public class PaysDao extends DAOBase {
         close();
         return listPays;
     }
+
+    public ArrayList<Pays> getByName(String name){
+        ArrayList<Pays> listPays = new ArrayList<Pays>();
+        open();
+        String whereClause = " WHERE LOWER("+TABLE_NAME+"."+NOM+")='"+name.toLowerCase()+"'";
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                Pays pays = new Pays(cursor.getString(cursor.getColumnIndex(NOM)));
+                pays.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                listPays.add(pays);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listPays;
+    }
 }
