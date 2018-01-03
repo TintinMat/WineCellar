@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tintin.mat.winecellar">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        tools:replace="android:icon"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.ModifierCaveActivity"
+            android:label="@string/edit_cellar">
+        </activity>
+        <activity
+            android:name=".activity.AjouterCaveActivity"
+            android:label="@string/add_cellar">
+        </activity>
+        <activity
+            android:name=".activity.VisualiserCaveActivity"
+            android:label="@string/content_cellar">
+        </activity>
+        <activity
+            android:name=".activity.VisualiserClayetteActivity"
+            android:label="@string/content_cellar">
+        </activity>
+        <activity
+            android:name=".activity.AjouterBouteilleActivity"
+            android:label="@string/add_bottle"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.ModifierBouteilleActivity"
+            android:label="@string/modif_bottle"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.BouteillesDegusteesActivity"
+            android:label="@string/modif_bottle">
+        </activity>
+        <activity
+            android:name=".activity.CarteVinsFranceActivity"
+            android:label="@string/modif_bottle">
+        </activity>
+        <activity
+            android:name=".activity.MillesimesVinsFranceActivity"
+            android:label="@string/modif_bottle">
+        </activity>
+
+    </application>
+
+</manifest>

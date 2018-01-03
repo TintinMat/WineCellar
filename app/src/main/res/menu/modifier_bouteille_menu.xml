@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/modif_bouteille"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/modif_bottle"
+        android:tooltipText="@string/modif_bottle"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/del_bouteille"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/delete_bottle"
+        android:tooltipText="@string/delete_bottle"
+        app:showAsAction="always|withText" />
+
+
+</menu>

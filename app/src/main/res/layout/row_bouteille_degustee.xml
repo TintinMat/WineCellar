@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+
+    >
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+    <ImageView
+        android:id="@+id/avatarBouteille"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/nomDomaineRowTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/avatarBouteille"
+        app:layout_constraintLeft_toRightOf="@+id/avatarBouteille"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="@string/text_view_nom_domaine" />
+
+    <TextView android:id="@+id/nomAppellationRowTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="@+id/nomDomaineRowTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nomDomaineRowTextView"
+        tools:text="@string/text_view_appellation"
+        android:layout_marginTop="5dp"/>
+
+    <TextView android:id="@+id/millesimeRowTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="@+id/nomDomaineRowTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nomAppellationRowTextView"
+        tools:text="@string/text_view_millesime"
+        android:layout_marginTop="5dp"/>
+
+    <TextView android:id="@+id/dateDegustationRowTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="@+id/nomDomaineRowTextView"
+        app:layout_constraintTop_toBottomOf="@+id/millesimeRowTextView"
+        tools:text="@string/text_view_row_date_degustation"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"/>
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

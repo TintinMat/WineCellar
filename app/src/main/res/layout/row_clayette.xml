@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipeClayette"
+    app:leftEdgeSwipeOffset="0dp"
+    app:rightEdgeSwipeOffset="0dp"
+    >
+
+    <LinearLayout
+        android:tag="Bottom4"
+        android:id="@+id/bottom_wrapper_2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/edit_clayette"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_width="70dp"
+            android:background="#4cd964"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/trash_clayette"
+            android:src="@drawable/trash"
+            android:layout_width="70dp"
+            android:background="@drawable/red"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_selector"
+        >
+
+        <TextView
+            android:id="@+id/nomClayetteRowTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            tools:text="nom clayette" />
+
+        <TextView android:id="@+id/nombreBouteillesRowTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_alignLeft="@+id/nomClayetteRowTextView"
+            android:layout_below="@+id/nomClayetteRowTextView"
+            tools:text="nb bouteilles"
+            android:layout_marginTop="5dp"/>
+
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

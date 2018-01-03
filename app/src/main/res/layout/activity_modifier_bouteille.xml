@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tintin.mat.winecellar.activity.AjouterBouteilleActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/scrollViewAddBottle">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="25dp">
+
+        <TextView
+            android:id="@+id/bouteillePhotoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_photo_cave"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageButton
+            android:id="@+id/bouteillePhotoImageButton"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:onClick="takePhoto"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintLeft_toRightOf="@+id/bouteillePhotoTextView"
+            app:layout_constraintTop_toTopOf="@+id/bouteillePhotoTextView" />
+
+
+     <TextView
+            android:id="@+id/generalitesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_generalites"
+            android:textStyle="bold|italic"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="0dp"
+            />
+
+        <TextView
+            android:id="@+id/nomDomaineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_domaine"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalitesTextView"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            />
+
+        <EditText
+            android:id="@+id/nomDomaineEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nomDomaineTextView"
+             />
+
+        <TextView
+            android:id="@+id/millesimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_millesime"
+            app:layout_constraintTop_toBottomOf="@+id/nomDomaineTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/millesimeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/millesimeTextView"
+            />
+
+        <TextView
+            android:id="@+id/paysTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_pays"
+            app:layout_constraintTop_toBottomOf="@+id/millesimeSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <Spinner
+            android:id="@+id/paysSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/millesimeSpinner"
+            app:layout_constraintBaseline_toBaselineOf="@+id/paysTextView"
+            />
+
+        <TextView
+            android:id="@+id/regionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_region"
+            app:layout_constraintTop_toBottomOf="@+id/paysSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <Spinner
+            android:id="@+id/regionSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/regionTextView"
+            />
+
+        <TextView
+            android:id="@+id/appellationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_appellation"
+            app:layout_constraintTop_toBottomOf="@+id/regionSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <Spinner
+            android:id="@+id/appellationSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/appellationTextView"
+            />
+
+        <TextView
+            android:id="@+id/couleurTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_couleur"
+            app:layout_constraintTop_toBottomOf="@+id/appellationSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <Spinner
+            android:id="@+id/couleurSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/couleurTextView"
+            />
+
+        <TextView
+            android:id="@+id/petillantTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_petillant"
+            app:layout_constraintTop_toBottomOf="@+id/couleurSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <Spinner
+            android:id="@+id/petillantSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/petillantTextView"
+            />
+
+        <TextView
+            android:id="@+id/emplacementTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_emplacement"
+            android:textStyle="bold|italic"
+            app:layout_constraintTop_toBottomOf="@+id/petillantSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/generalitesTextView"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/caveTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_cave"
+            app:layout_constraintTop_toBottomOf="@+id/emplacementTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/caveSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/caveTextView"
+            />
+        <TextView
+            android:id="@+id/clayetteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_clayette"
+            app:layout_constraintTop_toBottomOf="@+id/caveTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/clayetteSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/clayetteTextView"
+            />
+
+
+        <TextView
+            android:id="@+id/optionsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_options"
+            android:textStyle="bold|italic"
+            app:layout_constraintTop_toBottomOf="@+id/clayetteSpinner"
+            app:layout_constraintLeft_toLeftOf="@+id/generalitesTextView"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/dateDegustationTextView"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_date_degustation"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/optionsTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+        <EditText
+            android:id="@+id/dateDegustationEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            android:hint="@string/click_to_choose_date_degustation"
+            android:textStyle="bold|italic"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/dateDegustationTextView" />
+
+        <TextView
+            android:id="@+id/cepageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_cepage"
+            app:layout_constraintTop_toBottomOf="@+id/dateDegustationTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            />
+
+
+        <EditText
+            android:id="@+id/cepageEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/cepageTextView" />
+
+        <TextView
+            android:id="@+id/prixDachatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_prix"
+            app:layout_constraintTop_toBottomOf="@+id/cepageTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:id="@+id/prixDachatEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text=""
+            app:layout_constraintBaseline_toBaselineOf="@+id/prixDachatTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText" />
+
+        <CheckBox
+            android:id="@+id/bioCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_bio"
+            app:layout_constraintLeft_toRightOf="@+id/prixDachatEditText"
+            app:layout_constraintBottom_toBottomOf="@+id/prixDachatEditText"
+            android:layout_marginStart="50dp"/>
+
+        <TextView
+            android:id="@+id/lieuDachatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_lieu_dachat"
+            app:layout_constraintTop_toBottomOf="@+id/prixDachatTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:id="@+id/lieuDachatEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lieuDachatTextView" />
+
+        <TextView
+            android:id="@+id/dateDachatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_date_dachat"
+            app:layout_constraintTop_toBottomOf="@+id/lieuDachatTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:id="@+id/dateDachatEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            android:hint="@string/click_to_choose_date_dachat"
+            android:textStyle="italic"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/dateDachatTextView" />
+
+        <TextView
+            android:id="@+id/commentairesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_commentaires"
+            app:layout_constraintTop_toBottomOf="@+id/dateDachatTextView"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:id="@+id/commentairesEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:text=""
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineEditText"
+            app:layout_constraintBaseline_toBaselineOf="@+id/commentairesTextView" />
+
+
+        <TextView
+            android:id="@+id/apogeeMinTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_apogee_min"
+            app:layout_constraintTop_toBottomOf="@+id/commentairesEditText"
+            app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/apogeeMinSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/apogeeMinTextView"
+            app:layout_constraintBaseline_toBaselineOf="@+id/apogeeMinTextView"
+            android:layout_marginStart="20dp"
+            />
+        <TextView
+            android:id="@+id/apogeeMaxTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_apogee_max"
+            app:layout_constraintTop_toBottomOf="@+id/commentairesEditText"
+            app:layout_constraintLeft_toRightOf="@+id/apogeeMinSpinner"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="25dp"
+            />
+        <Spinner
+            android:id="@+id/apogeeMaxSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/apogeeMaxTextView"
+            app:layout_constraintBaseline_toBaselineOf="@+id/apogeeMaxTextView"
+            android:layout_marginStart="20dp"
+            />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

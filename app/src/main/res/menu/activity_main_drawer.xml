@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/ajouter_bouteille"
+            android:icon="@drawable/bottleplus"
+            android:title="@string/add_bottle"
+            />
+        <item
+            android:id="@+id/rechercher_bouteille"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="@string/search_bottle"
+            />
+        <item
+            android:id="@+id/bouteilles_degustees"
+            android:icon="@drawable/tire_bouchon"
+            android:title="@string/drunk_bottles"
+            />
+        <item
+            android:id="@+id/ajouter_cave"
+            android:icon="@drawable/caveplus"
+            android:title="@string/add_cellar"
+            />
+    </group>
+
+    <item android:title="@string/navigation_drawer_tools">
+        <menu>
+            <item
+                android:id="@+id/nav_stats"
+                android:icon="@drawable/stats"
+                android:title="@string/navigation_drawer_stats" />
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/navigation_drawer_config" />
+            <item
+                android:id="@+id/nav_map"
+                android:icon="@android:drawable/ic_menu_mapmode"
+                android:title="@string/navigation_drawer_map" />
+            <item
+                android:id="@+id/nav_millesimes"
+                android:icon="@android:drawable/ic_menu_mapmode"
+                android:title="@string/navigation_drawer_millesimes" />
+        </menu>
+    </item>
+
+</menu>

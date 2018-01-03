@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">WineCellar</string>
+
+    <!-- Side bar -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="navigation_drawer_tools">Outils</string>
+    <string name="navigation_drawer_stats">Statistiques</string>
+    <string name="navigation_drawer_map">Carte des vins</string>
+    <string name="navigation_drawer_millesimes">Millésimes 2003-2017</string>
+    <string name="navigation_drawer_config">Options</string>
+    <string name="navigation_header_title">WineCellar</string>
+    <string name="navigation_header_mail">winecellar@gmail.com</string>
+
+
+    <!-- Toolbar titles -->
+    <string name="toolbar_home">Mes caves</string>
+    <string name="toolbar_cave_modif">Modifier la cave</string>
+    <string name="toolbar_cave_nouvelle">Nouvelle cave</string>
+    <string name="toolbar_bouteille_nouvelle">Ajouter une bouteille</string>
+    <string name="toolbar_bouteille_modifier">Modifier la bouteille</string>
+    <string name="toolbar_bouteilles_degustees">Bouteilles Dégustées</string>
+    <string name="toolbar_carte_vins">Carte des Vins de France</string>
+    <string name="toolbar_millesimes_vins">Millésimes 2003-2017 des Vins de France</string>
+
+
+    <!-- 1ère page home -->
+    <string name="mes_caves">Mes caves</string>
+    <string name="no_cave">Pas de cave existante ! Par ici pour en ajouter une...</string>
+    <string name="choose_cave">Visualisez votre cave</string>
+    <!-- Boutons -->
+    <string name="add_cellar">Ajouter une cave</string>
+    <string name="add_bottle">Ajouter une bouteille</string>
+    <string name="del_bottle">Supprimer la bouteille</string>
+    <string name="search_bottle">Rechercher une bouteille</string>
+    <string name="content_cellar">Contenu de la cave</string>
+    <string name="drunk_bottles">Bouteilles Dégustées</string>
+
+
+    <!-- page nouvelle cave -->
+    <string name="text_view_nom_cave">Nom *</string>
+    <string name="text_view_nb_clayettes">Nombre de clayettes *</string>
+    <string name="text_view_nb_bouteilles">Nombre de bouteilles (théorique) *</string>
+    <string name="text_view_photo_cave">Sélectionner une photo</string>
+    <string name="message_creation_cave_ok">Nouvelle cave ajoutée</string>
+    <string name="message_creation_cave_ko">ERREUR dans la creation de la cave... Veuillez réessayer</string>
+    <string name="message_creation_cave_arg_manquant">Tous les champs sont obligatoires</string>
+    <!-- menu nouvelle cave -->
+    <string name="create_cellar">Créer la cave</string>
+
+    <!-- page visualiser cave (on voit les clayettes) -->
+    <string name="edit_cellar">Modifier la cave</string>
+    <string name="delete_cellar">Supprimer la cave</string>
+    <string name="modify_clayettes">Modifier les clayettes</string>
+    <string name="text_view_nom_domaine">Domaine : %1$s</string>
+    <string name="no_bouteille">Aucune bouteille sur cette clayette ! Veuillez d\'abord en ajouter une</string>
+    <string name="text_view_row_nb_bouteilles">Nombre de bouteilles : %1$d</string>
+    <string name="message_supprimer_clayette_ko_bouteille">Impossible de supprimer : clayette non vide</string>
+    <string name="message_supprimer_cave_ko_bouteille">Impossible de supprimer : cave non vide</string>
+    <string name="message_supprimer_clayette_ko">ERREUR dans la suppression de la clayette... Veuillez réessayer</string>
+    <string name="message_modifier_clayette_ko">ERREUR dans la modification de la clayette... Veuillez réessayer</string>
+    <string name="message_supprimer_clayette_ok">clayette supprimée</string>
+
+    <!-- page visualiser clayette (on voit les bouteilles) -->
+    <string name="text_view_drunk_bottle">Dégustée ?</string>
+    <string name="text_view_drunk_bottle_yes">Oui, Bue !</string>
+
+    <!-- page ajouter bouteille -->
+    <string name="create_bottle">Ajouter une bouteille</string>
+    <string name="text_view_generalites"><u>Géneralités</u></string>
+    <string name="text_view_emplacement"><u>Emplacement</u></string>
+    <string name="text_view_provenance"><u>Provenance</u></string>
+    <string name="text_view_options"><u>Options</u></string>
+    <string name="text_view_domaine">Domaine *</string>
+    <string name="text_view_pays">Pays</string>
+    <string name="text_view_region">Région</string>
+    <string name="text_view_appellation">Appellation</string>
+    <string name="text_view_millesime">Millésime</string>
+    <string name="text_view_apogee_min">Apogee min</string>
+    <string name="text_view_apogee_max">Max</string>
+    <string name="text_view_couleur">Couleur</string>
+    <string name="text_view_petillant">Petillant</string>
+    <string name="text_view_prix">Prix (€)</string>
+    <string name="text_view_lieu_dachat">Lieu d\'achat</string>
+    <string name="text_view_date_dachat">Date d\'achat</string>
+    <string name="text_view_commentaires">Commentaires</string>
+    <string name="text_view_clayette">Clayette *</string>
+    <string name="text_view_cave">Cave *</string>
+    <string name="text_view_quantite">Quantite *</string>
+    <string name="text_view_cepage">Cepage</string>
+    <string name="text_view_bio">Bio</string>
+    <string name="message_creation_bouteille_ko_nomDomaine">Merci de renseigner le domaine / château</string>
+    <string name="message_creation_bouteille_ko_clayette">Merci de renseigner la cave et la clayette</string>
+    <string name="message_creation_bouteille_ko">ERREUR dans l\'insertion de la bouteille... Veuillez réessayer</string>
+    <string name="message_creation_bouteille_ok">Nouvelle bouteille ajoutée</string>
+    <string name="click_to_choose_date_dachat">Cliquer pour choisir</string>
+
+    <!-- page modifier bouteille -->
+    <string name="modif_bottle">Enregistrer</string>
+    <string name="delete_bottle">Supprimer la bouteille</string>
+    <string name="message_modifier_bouteille_ko">ERREUR dans la modification de la bouteille... Veuillez réessayer</string>
+    <string name="message_supprimer_bouteille_ko">ERREUR dans la suppression de la bouteille... Veuillez réessayer</string>
+    <string name="message_modifier_bouteille_ok">bouteille modifiée</string>
+    <string name="message_supprimer_bouteille_ok">bouteille supprimée</string>
+    <string name="text_view_date_degustation">Date de dégustation</string>
+    <string name="click_to_choose_date_degustation">Cliquer pour choisir</string>
+
+    <!-- page bouteilles dégustées -->
+    <string name="no_drunk_bouteille">Aucune bouteille dégustée !</string>
+    <string name="button_deguster">Dégustée !</string>
+    <string name="text_view_row_millesime">Millésime : %1$d</string>
+    <string name="text_view_row_no_millesime">Millésime : %1$s</string>
+    <string name="text_view_row_date_degustation">Date de dégustation : %1$s</string>
+
+
+</resources>
