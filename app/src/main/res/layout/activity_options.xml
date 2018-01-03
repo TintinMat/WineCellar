@@ -15,7 +15,7 @@
         android:id="@+id/AjouterDonneesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_generalites"
+        android:text="@string/text_view_ajouter_donnnees"
         android:textStyle="bold|italic"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
