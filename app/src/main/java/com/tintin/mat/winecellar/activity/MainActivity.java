@@ -22,15 +22,18 @@ import com.tintin.mat.winecellar.adapter.CaveAdapter;
 import com.tintin.mat.winecellar.bo.Appellation;
 import com.tintin.mat.winecellar.bo.Cave;
 import com.tintin.mat.winecellar.bo.Pays;
+import com.tintin.mat.winecellar.bo.Preferences;
 import com.tintin.mat.winecellar.bo.Region;
 import com.tintin.mat.winecellar.dao.AppellationDao;
 import com.tintin.mat.winecellar.dao.CaveDao;
 import com.tintin.mat.winecellar.dao.DatabaseHandler;
 import com.tintin.mat.winecellar.dao.PaysDao;
+import com.tintin.mat.winecellar.dao.PreferencesDao;
 import com.tintin.mat.winecellar.dao.RegionDao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (mHandler.getMode() == DatabaseHandler.ON_CREATE || mHandler.getMode() == DatabaseHandler.ON_UPDATE){
             populateBdd();
         }
+        resetPreferences();
 
         setContentView(R.layout.activity_main);
         // modifier le titre de l'action bar
@@ -265,6 +269,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void options(){
         Intent appel = new Intent(MainActivity.this, OptionsActivity.class);
         startActivity(appel);
+    }
+
+
+    private void resetPreferences(){
+        PreferencesDao pDao = new PreferencesDao(this, mHandler);
+        Preferences sauvegardeCloupdPref = null;
+        List<Preferences> pp = pDao.getByCle(Preferences.SAUVEGARDE_CLOUD);
+        if (pp == null || pp.isEmpty()){
+            sauvegardeCloupdPref = new Preferences(Preferences.SAUVEGARDE_CLOUD, Preferences.YES);
+            pDao.ajouter(sauvegardeCloupdPref);
+        }
+        pp = pDao.getByCle(Preferences.SAUVEGARDE_PHOTOS);
+        if (pp == null || pp.isEmpty()){
+            sauvegardeCloupdPref = new Preferences(Preferences.SAUVEGARDE_PHOTOS, Preferences.NO);
+            pDao.ajouter(sauvegardeCloupdPref);
+        }
+        pp = pDao.getByCle(Preferences.LOGIN_CONNEXION);
+        if (pp == null || pp.isEmpty()){
+            sauvegardeCloupdPref = new Preferences(Preferences.LOGIN_CONNEXION, "");
+            pDao.ajouter(sauvegardeCloupdPref);
+        }
+
     }
 
     private void populateBdd(){

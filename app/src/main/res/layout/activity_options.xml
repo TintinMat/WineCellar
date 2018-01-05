@@ -80,5 +80,73 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/ajouterAppellationTextView"
         />
 
+    <TextView
+        android:id="@+id/PreferencesUtilisateurTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_preferences_utilisateur"
+        android:textStyle="bold|italic"
+        app:layout_constraintLeft_toLeftOf="@id/AjouterDonneesTextView"
+        app:layout_constraintTop_toBottomOf="@id/ajouterAppellationTextView"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="0dp"
+        />
+
+    <TextView
+        android:id="@+id/sauvegardeCloudTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_sauvegarde_cloud"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/PreferencesUtilisateurTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+
+    <Switch
+        android:id="@+id/sauvegardeCloudSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintRight_toRightOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/sauvegardeCloudTextView"  />
+
+    <TextView
+        android:id="@+id/sauvegardePhotoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_sauvegarde_photos"
+        app:layout_constraintTop_toBottomOf="@+id/sauvegardeCloudSwitch"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+
+    <Switch
+        android:id="@+id/sauvegardePhotoSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintRight_toRightOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/sauvegardePhotoTextView"  />
+
+    <TextView
+        android:id="@+id/loginConnexionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_login_connexion"
+        app:layout_constraintTop_toBottomOf="@+id/sauvegardePhotoSwitch"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+
+    <EditText
+        android:id="@+id/loginConnexionEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/loginConnexionTextView" />
+
+
+
 
 </android.support.constraint.ConstraintLayout>

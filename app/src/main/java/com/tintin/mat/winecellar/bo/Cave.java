@@ -1,7 +1,6 @@
 package com.tintin.mat.winecellar.bo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Mat & Audrey on 15/10/2017.

@@ -33,6 +33,10 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     // This dude gave a shoutout to you (daimajia) on his github page:
     compile 'jp.wasabeef:recyclerview-animators:1.0.3@aar'
+    // json + retrofit pour la connexion à un site (serveur)
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     testCompile 'junit:junit:4.12'
     compile project(path: ':library')
 }

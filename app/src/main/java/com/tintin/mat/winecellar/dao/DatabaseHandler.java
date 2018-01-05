@@ -41,6 +41,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL(CepageDao.TABLE_CREATE);
             db.execSQL(CepageBouteilleDao.TABLE_CREATE);
 
+            db.execSQL(PreferencesDao.TABLE_CREATE);
+
             setMode(this.ON_CREATE);
 
         }catch (SQLiteException ex){

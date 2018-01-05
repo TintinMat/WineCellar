@@ -11,7 +11,7 @@
     <string name="navigation_drawer_millesimes">Millésimes 2003-2017</string>
     <string name="navigation_drawer_config">Options</string>
     <string name="navigation_header_title">WineCellar</string>
-    <string name="navigation_header_mail">winecellar@gmail.com</string>
+    <string name="navigation_header_mail">mathieu.develop@gmail.com</string>
 
 
     <!-- Toolbar titles -->
@@ -56,7 +56,13 @@
     <string name="text_view_ajouter_region">Ajouter/Choisir Région</string>
     <string name="text_view_ajouter_appellation">Ajouter/Choisir Appellation</string>
     <string name="text_view_ajouter_donnnees"><u>Ajouter des Données</u></string>
+    <string name="text_view_preferences_utilisateur"><u>Préférences Utilisateur</u></string>
+    <string name="text_view_sauvegarde_cloud">Sauver les données dans le cloud</string>
+    <string name="text_view_sauvegarde_photos">Importer les photos</string>
+    <string name="text_view_login_connexion">Login de connexion</string>
     <string name="message_ajouter_donnees_ok">Nouvelles données ajoutées</string>
+    <string name="message_ajouter_region_ko">Sélectionner d\'abord un pays</string>
+    <string name="message_ajouter_appellation_ko">Sélectionner d\'abord une region</string>
     <!-- menu options -->
     <string name="add_options">Ajouter les données</string>
 

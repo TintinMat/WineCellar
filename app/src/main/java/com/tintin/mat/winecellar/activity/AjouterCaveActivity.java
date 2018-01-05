@@ -1,5 +1,6 @@
 package com.tintin.mat.winecellar.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,15 +16,22 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.tintin.mat.winecellar.R;
+import com.tintin.mat.winecellar.ResponseModels.InsertCaveResponseModel;
 import com.tintin.mat.winecellar.bo.Cave;
 import com.tintin.mat.winecellar.bo.Clayette;
 import com.tintin.mat.winecellar.dao.CaveDao;
 import com.tintin.mat.winecellar.dao.ClayetteDao;
+import com.tintin.mat.winecellar.utils.ApiClient;
+import com.tintin.mat.winecellar.utils.ApiService;
 import com.tintin.mat.winecellar.utils.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
@@ -35,6 +43,8 @@ public class AjouterCaveActivity extends AppCompatActivity {
 
     private static int RESULT_LOAD_IMAGE = 1;
     private byte[] inputDataForPhoto = null;
+
+    private ProgressDialog progressDialog;
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -48,6 +58,10 @@ public class AjouterCaveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ajouter_cave);
         setTitle(R.string.toolbar_cave_nouvelle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Inserting");
+        progressDialog.setMessage("Please wait ....");
     }
 
     @Override
@@ -83,6 +97,7 @@ public class AjouterCaveActivity extends AppCompatActivity {
                 }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_cave_ok, Toast.LENGTH_LONG);
                 toast.show();
+                //insertData(cave);
                 finish();
             }catch (Exception ex){
                 Log.e(TAG, "ajouterCave ",ex );
@@ -133,5 +148,44 @@ public class AjouterCaveActivity extends AppCompatActivity {
             Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
+
+
+
+
+
+    /***************************************************/
+
+    /**
+     * this method used to send data to server or our local server
+     * @param cave
+     */
+    private void insertData(Cave cave){
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<InsertCaveResponseModel> call = apiService.insertCave(cave.getNom(), cave.getNbBouteillesTheoriques());
+        call.enqueue(new Callback<InsertCaveResponseModel>() {
+            @Override
+            public void onResponse(Call<InsertCaveResponseModel> call, Response<InsertCaveResponseModel> response) {
+
+                InsertCaveResponseModel insertCaveResponseModel = response.body();
+
+                //check the status code
+                if(insertCaveResponseModel.getStatus()==1){
+                    Toast.makeText(AjouterCaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }else{
+                    Toast.makeText(AjouterCaveActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InsertCaveResponseModel> call, Throwable t) {
+                Toast.makeText(AjouterCaveActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    /***************************************************/
 
 }
