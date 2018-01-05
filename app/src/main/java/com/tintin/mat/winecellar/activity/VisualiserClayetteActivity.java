@@ -1,10 +1,10 @@
 package com.tintin.mat.winecellar.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -12,19 +12,15 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.tintin.mat.winecellar.R;
-import com.tintin.mat.winecellar.adapter.BouteilleAdapter;
 import com.tintin.mat.winecellar.adapter.BouteilleSwipeAdapter;
 import com.tintin.mat.winecellar.bo.Bouteille;
-import com.tintin.mat.winecellar.bo.Cave;
 import com.tintin.mat.winecellar.bo.Clayette;
 import com.tintin.mat.winecellar.dao.BouteilleDao;
-import com.tintin.mat.winecellar.dao.CaveDao;
 import com.tintin.mat.winecellar.interfce.BouteilleInterface;
 
 import java.io.Serializable;
@@ -32,22 +28,42 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class VisualiserClayetteActivity extends AppCompatActivity implements BouteilleInterface {
+public class VisualiserClayetteActivity extends AppCompatActivity implements BouteilleInterface, SearchView.OnQueryTextListener {
 
     private ListView listeViewBouteilles;
     private BouteilleSwipeAdapter adapter;
     private Clayette clayette;
     private BouteilleDao bouteilleDao = null;
+    private SearchView searchView = null;
+    private MenuItem searchMenuItem = null;
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.getFilter().filter(newText);
+
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.visualiser_clayette_menu, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchMenuItem = menu.findItem(R.id.rechercher_bouteille);
+        searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -117,6 +133,12 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                    // ((SwipeLayout)(listeViewBouteilles.getChildAt(position - listeViewBouteilles.getFirstVisiblePosition()))).open(true);
+
+                    // close search view if its visible
+                    if (searchView.isShown()) {
+                        searchMenuItem.collapseActionView();
+                        searchView.setQuery("", false);
+                    }
 
                     Bouteille b = (Bouteille) adapter.getItem(position);
 

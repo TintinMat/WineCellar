@@ -4,9 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -18,22 +19,28 @@ import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.interfce.BouteilleInterface;
 import com.tintin.mat.winecellar.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Mat & Audrey on 22/10/2017.
  */
 
-public class BouteilleSwipeAdapter extends BaseSwipeAdapter {
+public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterable {
 
     private Context context;
     private BouteilleInterface listener;
     private List<Bouteille> bouteilles;
+    private List<Bouteille> filteredList;
+    private BouteilleFilter bouteilleFilter;
 
     public BouteilleSwipeAdapter(Context context, List<Bouteille> bouteilles, BouteilleInterface listener) {
         this.context = context;
         this.listener=listener;
         this.bouteilles = bouteilles;
+        this.filteredList = bouteilles;
+
+        getFilter();
     }
 
     @Override
@@ -57,15 +64,6 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter {
                 //Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
-        /*
-        final Bouteille bouteille = (Bouteille)getItem(position);
-        v.findViewById(R.id.drunk).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
-                listener.degusterBouteille(bouteille);
-            }
-        });*/
         return v;
     }
 
@@ -114,13 +112,13 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter {
 
     @Override
     public int getCount() {
-        return bouteilles.size();
+        return filteredList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (bouteilles != null && position<bouteilles.size()) {
-            return bouteilles.get(position);
+        if (filteredList != null && position<filteredList.size()) {
+            return filteredList.get(position);
         }else{
             return null;
         }
@@ -131,4 +129,59 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter {
         return position;
     }
 
+    /**
+     * Get custom filter
+     * @return filter
+     */
+    @Override
+    public Filter getFilter() {
+        if (bouteilleFilter == null) {
+            bouteilleFilter = new BouteilleFilter();
+        }
+
+        return bouteilleFilter;
+    }
+
+    /**
+     * Custom filter for bouteille list
+     * Filter content in bouteille list according to the search text
+     */
+    private class BouteilleFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults filterResults = new FilterResults();
+            if (constraint!=null && constraint.length()>0) {
+                ArrayList<Bouteille> tempList = new ArrayList<Bouteille>();
+
+                // search content in friend list
+                for (Bouteille btlle : bouteilles) {
+                    if (btlle.getDomaine().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+                            btlle.getAppellation().getNom().toLowerCase().contains(constraint.toString().toLowerCase()) ) {
+                        tempList.add(btlle);
+                    }
+                }
+
+                filterResults.count = tempList.size();
+                filterResults.values = tempList;
+            } else {
+                filterResults.count = bouteilles.size();
+                filterResults.values = bouteilles;
+            }
+
+            return filterResults;
+        }
+
+        /**
+         * Notify about filtered list to ui
+         * @param constraint text
+         * @param results filtered result
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredList = (ArrayList<Bouteille>) results.values;
+            notifyDataSetChanged();
+        }
+    }
 }
