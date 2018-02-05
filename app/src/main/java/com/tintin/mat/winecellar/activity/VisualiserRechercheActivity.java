@@ -32,14 +32,14 @@ import java.util.Date;
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class VisualiserClayetteActivity extends AppCompatActivity implements BouteilleInterface, SearchView.OnQueryTextListener {
+public class VisualiserRechercheActivity extends AppCompatActivity implements BouteilleInterface, SearchView.OnQueryTextListener {
 
     private ListView listeViewBouteilles;
     private BouteilleSwipeAdapter adapter;
-    private Clayette clayette;
     private BouteilleDao bouteilleDao = null;
     private SearchView searchView = null;
     private MenuItem searchMenuItem = null;
+    private ArrayList<Bouteille> listeBouteillesTrouvees = null;
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -55,7 +55,7 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.visualiser_clayette_menu, menu);
+        getMenuInflater().inflate(R.menu.visualiser_recherche_menu, menu);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchMenuItem = menu.findItem(R.id.rechercher_bouteille);
@@ -70,11 +70,9 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visualiser_clayette);
+        setContentView(R.layout.activity_visualiser_recherche);
         // récupération de la clayette passée en paramètre
-        clayette = (Clayette) getIntent().getExtras().get("Key");
-        // mettre ici le nom de la clayette passée en paramètre
-        setTitle(clayette.getNom());
+        listeBouteillesTrouvees = (ArrayList<Bouteille>) getIntent().getExtras().get("Key");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -91,11 +89,6 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.ajouter_bouteille:
-                ajouterBouteille();
-                return true;
-            case R.id.modifier_cave:
-                return true;
             case R.id.rechercher_bouteille :
                 //TODO
                 return true;
@@ -103,29 +96,24 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
         return super.onOptionsItemSelected(item);
     }
 
-    private void ajouterBouteille(){
-        Intent appel = new Intent(this, AjouterBouteilleActivity.class);
-        appel.putExtra("KeyClayette", (Serializable) clayette);
-        startActivity(appel);
-    }
 
     private void afficherListeBouteilles(){
 
         // récupérer les bouteilles
         // il faut recharger les bouteilles depuis la bdd pcq si on a mis à jour les bouteilles...
-        BouteilleDao bouteilleDao = new BouteilleDao(this,null);
+        /*BouteilleDao bouteilleDao = new BouteilleDao(this,null);
         ArrayList<Bouteille> listeBouteilles = bouteilleDao.getAllNotDegustedAssociatedWithClayette(clayette);
-
+*/
         listeViewBouteilles = (ListView)findViewById(R.id.listeBouteilles);
         TextView textBouteilleNb = (TextView) findViewById(R.id.textBouteilleNb);
 
-        if (listeBouteilles == null || listeBouteilles.size() == 0){
-            textBouteilleNb.setText(R.string.no_bouteille);
+        if (listeBouteillesTrouvees == null || listeBouteillesTrouvees.size() == 0){
+            textBouteilleNb.setText(R.string.no_bouteille_recherche);
             textBouteilleNb.setVisibility(View.VISIBLE);
             listeViewBouteilles.setVisibility(View.INVISIBLE);
         }else {
 
-            adapter = new BouteilleSwipeAdapter(VisualiserClayetteActivity.this, listeBouteilles, this);
+            adapter = new BouteilleSwipeAdapter(VisualiserRechercheActivity.this, listeBouteillesTrouvees, this);
             listeViewBouteilles.setAdapter(adapter);
             adapter.setMode(Attributes.Mode.Single);
 
@@ -142,7 +130,7 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
 
                     Bouteille b = (Bouteille) adapter.getItem(position);
 
-                    Intent intent = new Intent(VisualiserClayetteActivity.this, ModifierBouteilleActivity.class);
+                    Intent intent = new Intent(VisualiserRechercheActivity.this, ModifierBouteilleActivity.class);
                     //based on item add info to intent
                     intent.putExtra("Key", (Serializable) b);
                     startActivity(intent);

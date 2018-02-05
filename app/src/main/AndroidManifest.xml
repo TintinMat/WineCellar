@@ -47,6 +47,14 @@
             </meta-data>
         </activity>
         <activity
+            android:name=".activity.VisualiserRechercheActivity"
+            android:label="@string/toolbar_recherche_globale">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+        <activity
             android:name=".activity.AjouterBouteilleActivity"
             android:label="@string/add_bottle"
             android:windowSoftInputMode="stateHidden">
@@ -71,6 +79,11 @@
         <activity
             android:name=".activity.OptionsActivity"
             android:label="@string/modif_bottle">
+        </activity>
+        <activity
+            android:name=".activity.RechercheGlobaleActivity"
+            android:label="@string/toolbar_recherche_globale"
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
 

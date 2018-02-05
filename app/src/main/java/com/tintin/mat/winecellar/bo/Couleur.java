@@ -1,10 +1,12 @@
 package com.tintin.mat.winecellar.bo;
 
+import java.io.Serializable;
+
 /**
  * Created by Mat & Audrey on 03/11/2017.
  */
 
-public class Couleur {
+public class Couleur implements Serializable {
 
     public static final int ROUGE = 1;
     public static final int ROSE = 3;

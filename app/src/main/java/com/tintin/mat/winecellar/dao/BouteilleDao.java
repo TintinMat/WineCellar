@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.tintin.mat.winecellar.bo.Appellation;
 import com.tintin.mat.winecellar.bo.Bouteille;
@@ -17,6 +16,7 @@ import com.tintin.mat.winecellar.bo.Petillant;
 import com.tintin.mat.winecellar.bo.Region;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Mat & Audrey on 15/10/2017.
@@ -281,6 +281,14 @@ public class BouteilleDao extends DAOBase {
 
         open();
 
+        Bouteille bouteille = getWithAllDependenciesWithoutOpeningConnection(b);
+
+        close();
+        return bouteille;
+    }
+
+    public Bouteille getWithAllDependenciesWithoutOpeningConnection(Bouteille b)
+    {
         String query1 = "SELECT "+TABLE_NAME+".*, "+
                 AppellationDao.TABLE_NAME+"."+AppellationDao.KEY + " as "+AppellationDao.TABLE_NAME+"_"+AppellationDao.KEY + ", " +
                 AppellationDao.TABLE_NAME+"."+AppellationDao.NOM + " as "+AppellationDao.TABLE_NAME+"_"+AppellationDao.NOM + ", " +
@@ -408,7 +416,6 @@ public class BouteilleDao extends DAOBase {
             }
         }
         cursor.close();
-        close();
         return bouteille;
     }
 
@@ -419,4 +426,92 @@ public class BouteilleDao extends DAOBase {
         return ret;
     }
 
+    public ArrayList<Bouteille> findWhere(Bouteille bouteilleTemplate, Appellation appTemplate, Region regionTemplate, Millesime millTemplate){
+
+        ArrayList<Bouteille> listeBouteilles = new ArrayList<Bouteille>();
+        open();
+        boolean fromClauseAvecAppellation = false;
+        String queryClause = "";
+        String whereClause = " WHERE ";
+        String fromClause  = " FROM "+TABLE_NAME+" b ";
+
+
+        if (bouteilleTemplate.getDomaine() != null && bouteilleTemplate.getDomaine().length() > 0){
+            queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b "+
+                    " WHERE LOWER( b."+DOMAINE+") like LOWER('%"+bouteilleTemplate.getDomaine()+"%') "+
+                    " UNION ";
+        }
+        if (bouteilleTemplate.getCommentaires() != null && bouteilleTemplate.getCommentaires().length() > 0){
+            queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b "+
+                    " WHERE LOWER(b."+COMMENTAIRES+") like LOWER('%"+bouteilleTemplate.getCommentaires()+"%') "+
+                    " UNION ";
+        }
+        if (millTemplate.getAnnee() != 0){
+            queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b "+
+                    " WHERE b."+MILLESIME+" = "+millTemplate.getAnnee() +
+                    " UNION ";
+        }
+        if (regionTemplate.getNom() != null && regionTemplate.getNom().length() > 0){
+            queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b, "+RegionDao.TABLE_NAME+", "+AppellationDao.TABLE_NAME +
+                    " WHERE ( LOWER("+RegionDao.TABLE_NAME+"."+RegionDao.NOM+") like LOWER('%"+regionTemplate.getNom()+"%') " +
+                    " AND b."+FK_APPELLATION+"="+AppellationDao.TABLE_NAME+"."+AppellationDao.KEY +
+                    " AND "+AppellationDao.TABLE_NAME+"."+AppellationDao.FK_REGION+"="+RegionDao.TABLE_NAME+"."+RegionDao.KEY +
+                    " ) " +
+                    " UNION ";
+        }
+        if (appTemplate.getNom() != null && appTemplate.getNom().length() > 0){
+            queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b, "+AppellationDao.TABLE_NAME +
+                    " WHERE ( LOWER("+AppellationDao.TABLE_NAME+"."+AppellationDao.NOM+") like LOWER('%"+appTemplate.getNom()+"%') " +
+                    " AND b."+FK_APPELLATION+"="+AppellationDao.TABLE_NAME+"."+AppellationDao.KEY +
+                    " ) " +
+                    " UNION ";
+        }
+        queryClause += " SELECT b.id as btlleId FROM "+TABLE_NAME+" b "+
+                " WHERE 1=2 ";
+
+        Cursor cursor = mDb.rawQuery(queryClause, null);
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(cursor.getColumnIndex("btlleId" )) > 0) {
+                    Bouteille bouteille = new Bouteille();
+                    bouteille.setId(cursor.getInt(cursor.getColumnIndex("btlleId")));
+
+                    listeBouteilles.add(getWithAllDependenciesWithoutOpeningConnection(bouteille));
+
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listeBouteilles;
+
+    }
+
+
+    public ArrayList<Bouteille> findToDrink(){
+        ArrayList<Bouteille> listeBouteilles = new ArrayList<Bouteille>();
+        open();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        String queryClause = " SELECT "+KEY+" FROM "+TABLE_NAME+
+                " WHERE "+ APOGEEMIN +" <= "+ year +
+                " AND ("+ANNEEDEGUSTATION+" IS NULL OR "+ANNEEDEGUSTATION+" = 0) " +
+                " ORDER BY "+APOGEEMIN +" DESC";
+        Cursor cursor = mDb.rawQuery(queryClause, null);
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
+            do {
+                if (cursor.getInt(cursor.getColumnIndex(KEY )) > 0) {
+                    Bouteille bouteille = new Bouteille();
+                    bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+
+                    listeBouteilles.add(getWithAllDependenciesWithoutOpeningConnection(bouteille));
+
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return listeBouteilles;
+    }
 }

@@ -11,6 +11,9 @@ public class Millesime implements Serializable {
     public final String NO_MILLESIME = "<aucun>";
     private int annee;
 
+    public Millesime() {
+    }
+
     public Millesime(int annee) {
         this.annee = annee;
     }

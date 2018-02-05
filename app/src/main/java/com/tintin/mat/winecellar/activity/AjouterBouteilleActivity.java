@@ -62,7 +62,7 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
     private EditText dateDachatEditText;
     private int dateDachatIntFormat;
 
-    private Cave cave = null;
+    private Clayette clayette = null;
     private Appellation appellationChosen = null;
     private Millesime millesimeChosen = null;
     private Clayette clayetteChosen = null;
@@ -93,8 +93,8 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_bouteille);
         setTitle(R.string.toolbar_bouteille_nouvelle);
-        if (getIntent().getExtras() != null && getIntent().getExtras().get("Key") != null) {
-            cave = (Cave) getIntent().getExtras().get("Key");
+        if (getIntent().getExtras() != null && getIntent().getExtras().get("KeyClayette") != null) {
+            clayette = (Clayette) getIntent().getExtras().get("KeyClayette");
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -300,6 +300,18 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinnerCaves.setAdapter(adapter);
 
+        // positionner la valeur
+        try{
+            for(int i=0;i<adapter.getCount();i++){
+                if (clayette.getCave().getId() == adapter.getItem(i).getId()){
+                    spinnerCaves.setSelection(i);
+                    break;
+                }
+            }
+        }catch (NullPointerException npe){
+            //on fait rien
+        }
+
         spinnerCaves.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -323,6 +335,17 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
                 new ArrayAdapter<Clayette>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, listeClayettes);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinnerClayettes.setAdapter(adapter);
+
+        try{
+            for(int i=0;i<adapter.getCount();i++){
+                if (clayette.getId() == adapter.getItem(i).getId()){
+                    spinnerClayettes.setSelection(i);
+                    break;
+                }
+            }
+        }catch (NullPointerException npe){
+            //on fait rien
+        }
 
         spinnerClayettes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

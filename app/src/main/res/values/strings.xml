@@ -19,6 +19,7 @@
     <string name="toolbar_cave_modif">Modifier la cave</string>
     <string name="toolbar_cave_nouvelle">Nouvelle cave</string>
     <string name="toolbar_options">Options</string>
+    <string name="toolbar_recherche_globale">Rechercher une bouteille</string>
     <string name="toolbar_bouteille_nouvelle">Ajouter une bouteille</string>
     <string name="toolbar_bouteille_modifier">Modifier la bouteille</string>
     <string name="toolbar_bouteilles_degustees">Bouteilles Dégustées</string>
@@ -66,6 +67,23 @@
     <!-- menu options -->
     <string name="add_options">Ajouter les données</string>
 
+    <!-- page recherche globale -->
+    <string name="text_view_criteres_recherche"><u>Critères de recherche :</u></string>
+    <string name="text_view_boire_dans_l_annee"><u>A boire dans l\'année</u></string>
+    <string name="text_view_recherche_par_criteres"><u>Par critères</u></string>
+    <string name="text_view_recherche_texte_a_rechercher">Texte à rechercher</string>
+    <string name="text_view_recherche_dans_tous_champs">Dans tous les champs</string>
+    <string name="text_view_recherche_dans_certains_champs">Dans les champs suivants :</string>
+    <string name="text_view_recherche_dans_domaine">Domaine</string>
+    <string name="text_view_recherche_dans_millesime">Millésime</string>
+    <string name="text_view_recherche_dans_region">Région</string>
+    <string name="text_view_recherche_dans_appellation">Appellation</string>
+    <string name="text_view_recherche_dans_commentaires">Commentaires</string>
+    <string name="text_view_recherche_go">Lancer la recherche</string>
+    <string name="message_recherche_criteres_ko">Veuillez sélectionner un critère de recherche</string>
+    <string name="message_recherche_texte_ko">Veuillez renseigner un texte à rechercher</string>
+    <string name="message_recherche_choix_champs_ko">Veuillez sélectionner les champs à rechercher</string>
+    <string name="no_bouteille_recherche">Aucune bouteille avec ces critères</string>
 
 
     <!-- page visualiser cave (on voit les clayettes) -->

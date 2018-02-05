@@ -1,10 +1,12 @@
 package com.tintin.mat.winecellar.bo;
 
+import java.io.Serializable;
+
 /**
  * Created by Mat & Audrey on 03/11/2017.
  */
 
-public class Petillant {
+public class Petillant implements Serializable {
 
     public static final int NON_PETILLANT = 0;
     public static final int PETILLANT = 1;

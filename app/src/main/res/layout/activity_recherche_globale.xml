@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tintin.mat.winecellar.activity.RechercheGlobaleActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:focusableInTouchMode="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <TextView
+            android:id="@+id/criteresTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_criteres_recherche"
+            android:textStyle="bold|italic"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="0dp"
+            />
+
+        <RadioGroup
+            android:id="@+id/rechercheCriteresRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/criteresTextView"
+            app:layout_constraintTop_toBottomOf="@+id/criteresTextView"
+            >
+
+            <RadioButton
+                android:id="@+id/boireDansLanneeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_boire_dans_l_annee"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="@id/criteresTextView"
+                app:layout_constraintTop_toBottomOf="@id/criteresTextView"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="25dp"
+                />
+
+
+            <RadioButton
+                android:id="@+id/rechercheParCriteresRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_recherche_par_criteres"
+                android:textStyle="italic"
+                app:layout_constraintLeft_toLeftOf="@id/boireDansLanneeRadioButton"
+                app:layout_constraintTop_toBottomOf="@id/boireDansLanneeRadioButton"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/rechercheTexteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_texte_a_rechercher"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheCriteresRadioGroup"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheCriteresRadioGroup"
+            android:layout_marginStart="50dp"
+            />
+
+        <EditText
+            android:id="@+id/rechercheTexteEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text=""
+            app:layout_constraintLeft_toRightOf="@+id/rechercheTexteTextView"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rechercheTexteTextView" />
+
+        <RadioGroup
+            android:id="@+id/rechercheRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheTexteTextView"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheTexteEditText"
+            >
+
+            <RadioButton
+                android:id="@+id/rechercheTousChampsRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_recherche_dans_tous_champs"
+                app:layout_constraintLeft_toLeftOf="@+id/rechercheTexteTextView"
+                app:layout_constraintTop_toBottomOf="@+id/rechercheTexteTextView"
+                android:layout_marginTop="10dp"/>
+
+            <RadioButton
+                android:id="@+id/rechercheCertainsChampsRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_recherche_dans_certains_champs"
+                app:layout_constraintLeft_toLeftOf="@+id/rechercheTexteTextView"
+                app:layout_constraintTop_toBottomOf="@+id/rechercheTousChampsRadioButton"
+                android:layout_marginTop="10dp"/>
+
+        </RadioGroup>
+
+        <CheckBox
+            android:id="@+id/rechercheDomaineCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_dans_domaine"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheTexteTextView"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheRadioGroup"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="25dp"/>
+
+        <CheckBox
+            android:id="@+id/rechercheMillesimeCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_dans_millesime"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheDomaineCheckBox"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheDomaineCheckBox"
+            android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:id="@+id/rechercheRegionCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_dans_region"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheDomaineCheckBox"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheMillesimeCheckBox"
+            android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:id="@+id/rechercheAppellationCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_dans_appellation"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheDomaineCheckBox"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheRegionCheckBox"
+            android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:id="@+id/rechercheCommentairesCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_recherche_dans_commentaires"
+            app:layout_constraintLeft_toLeftOf="@+id/rechercheDomaineCheckBox"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheAppellationCheckBox"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/rechercheGoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:onClick="lancerRecherche"
+            android:text="@string/text_view_recherche_go"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rechercheCommentairesCheckBox" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

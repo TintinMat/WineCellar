@@ -1,10 +1,12 @@
 package com.tintin.mat.winecellar.bo;
 
+import java.io.Serializable;
+
 /**
  * Created by Mat & Audrey on 16/10/2017.
  */
 
-public class Cepage {
+public class Cepage implements Serializable {
 
     private long id;
     private String nom;

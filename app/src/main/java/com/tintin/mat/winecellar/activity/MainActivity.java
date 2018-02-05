@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if (id == R.id.modifier_cave){
             modifierCave();
         }else if (id == R.id.rechercher_bouteille){
-
+            rechercheGlobale();
         }else if (id == R.id.bouteilles_degustees){
             bouteillesDegustees();
         }else if (id == R.id.nav_map){
@@ -268,6 +268,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void options(){
         Intent appel = new Intent(MainActivity.this, OptionsActivity.class);
+        startActivity(appel);
+    }
+
+    private void rechercheGlobale(){
+        Intent appel = new Intent(MainActivity.this, RechercheGlobaleActivity.class);
         startActivity(appel);
     }
 
