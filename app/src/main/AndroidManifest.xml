@@ -27,10 +27,6 @@
         </activity>
 
         <activity
-            android:name=".activity.ModifierCaveActivity"
-            android:label="@string/edit_cellar">
-        </activity>
-        <activity
             android:name=".activity.AjouterCaveActivity"
             android:label="@string/add_cellar">
         </activity>

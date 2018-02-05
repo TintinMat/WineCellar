@@ -154,8 +154,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ajouterCave();
         }else if (id == R.id.ajouter_bouteille){
             ajouterBouteille();
-        }else if (id == R.id.modifier_cave){
-            modifierCave();
+        //}else if (id == R.id.modifier_cave){
+           // modifierCave();
         }else if (id == R.id.rechercher_bouteille){
             rechercheGlobale();
         }else if (id == R.id.bouteilles_degustees){
@@ -243,11 +243,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void ajouterBouteille(){
         Intent appel = new Intent(MainActivity.this, AjouterBouteilleActivity.class);
-        startActivity(appel);
-    }
-
-    private void modifierCave(){
-        Intent appel = new Intent(MainActivity.this, ModifierCaveActivity.class);
         startActivity(appel);
     }
 

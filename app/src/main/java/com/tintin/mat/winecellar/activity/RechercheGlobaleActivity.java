@@ -145,12 +145,17 @@ public class RechercheGlobaleActivity extends AppCompatActivity {
             toast.show();
         }
 
-        // on a la liste des id dans listeBouteillesTrouvees
-        // passer cette liste à la view
-        Intent intent = new Intent(RechercheGlobaleActivity.this, VisualiserRechercheActivity.class);
-        //based on item add info to intent
-        intent.putExtra("Key", (Serializable) listeBouteillesTrouvees);
-        startActivity(intent);
+        if (listeBouteillesTrouvees.isEmpty()){
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.no_bouteille_recherche, Toast.LENGTH_LONG);
+            toast.show();
+        }else {
+            // on a la liste des id dans listeBouteillesTrouvees
+            // passer cette liste à la view
+            Intent intent = new Intent(RechercheGlobaleActivity.this, VisualiserRechercheActivity.class);
+            //based on item add info to intent
+            intent.putExtra("Key", (Serializable) listeBouteillesTrouvees);
+            startActivity(intent);
+        }
 
     }
 

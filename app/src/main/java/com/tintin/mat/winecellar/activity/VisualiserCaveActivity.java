@@ -89,13 +89,8 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
             case R.id.ajouter_bouteille:
                 ajouterBouteille();
                 return true;
-            case R.id.modifier_cave:
-                return true;
             case R.id.delete_cave:
                 deleteCave();
-                return true;
-            case R.id.rechercher_bouteille :
-                //TODO
                 return true;
         }
         return super.onOptionsItemSelected(item);

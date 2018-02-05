@@ -15,7 +15,6 @@ public class MillesimesVinsFranceActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.modifier_cave_menu, menu);
         return true;
     }
 

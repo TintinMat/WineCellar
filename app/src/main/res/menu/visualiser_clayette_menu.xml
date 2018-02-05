@@ -4,10 +4,17 @@
 
 
     <item
+        android:id="@+id/rechercher_bouteille"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/search_bottle"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.widget.SearchView" />
+    <item
         android:id="@+id/ajouter_bouteille"
         android:icon="@drawable/bottleplus"
         android:title="@string/search_bottle"
         app:showAsAction="always" />
- 
+
+
 
 </menu>

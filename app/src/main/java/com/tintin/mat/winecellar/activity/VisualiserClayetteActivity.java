@@ -94,8 +94,6 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
             case R.id.ajouter_bouteille:
                 ajouterBouteille();
                 return true;
-            case R.id.modifier_cave:
-                return true;
             case R.id.rechercher_bouteille :
                 //TODO
                 return true;
