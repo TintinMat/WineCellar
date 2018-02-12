@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tintin.mat.winecellar.activity.ModifierCaveActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <TextView
+        android:id="@+id/nomCaveModifierTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_nom_cave"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/nomCaveModifierEditText"
+        app:layout_constraintBottom_toTopOf="@+id/nomCaveModifierEditText"
+        android:layout_marginBottom="7dp"
+        android:layout_marginStart="0dp" />
+
+    <EditText
+        android:id="@+id/nomCaveModifierEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/nbBouteillesModifierTextView"
+        app:layout_constraintBottom_toTopOf="@+id/nbBouteillesModifierTextView"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="0dp" />
+
+    <TextView
+        android:id="@+id/nbBouteillesModifierTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_nb_bouteilles"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nbBouteillesModifierEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/nbBouteillesModifierEditText"
+        android:layout_marginStart="0dp" />
+
+    <EditText
+        android:id="@+id/nbBouteillesModifierEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text=""
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/cavePhotoModifierTextView"
+        app:layout_constraintBottom_toTopOf="@+id/cavePhotoModifierTextView"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="0dp"
+        />
+
+    <TextView
+        android:id="@+id/cavePhotoModifierTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_photo_cave"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cavePhotoModifierImageButton"
+        app:layout_constraintLeft_toLeftOf="@+id/cavePhotoModifierImageButton"
+        android:layout_marginStart="0dp" />
+
+    <ImageButton
+        android:id="@+id/cavePhotoModifierImageButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="300dp"
+        android:onClick="takePhoto"
+        android:adjustViewBounds="true"
+        android:padding="5dp"
+        android:scaleType="fitCenter"/>
+
+
+</android.support.constraint.ConstraintLayout>

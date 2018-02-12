@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.tintin.mat.winecellar.bo.Cave;
+import com.tintin.mat.winecellar.bo.Region;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,24 @@ public class CaveDao extends DAOBase {
 
     }
 
+    public Cave get(long id){
+        open();
+        String whereClause = " WHERE "+TABLE_NAME+"."+KEY+"="+id;
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
+        Cave cave = new Cave();
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                cave = new Cave(cursor.getString(cursor.getColumnIndex(NOM)), cursor.getInt(cursor.getColumnIndex(NBBOUTEILLES)));
+                cave.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
+                cave.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return cave;
+    }
+
     public boolean supprimer(Cave cave) {
         // CODE
         open();
@@ -72,6 +91,22 @@ public class CaveDao extends DAOBase {
         close();
         return ret_value;
 
+    }
+
+    public long modifier(Cave cave) {
+
+        long ret_value = -1;
+
+        ContentValues values = new ContentValues();
+        values.put(NOM, cave.getNom());
+        values.put(NBBOUTEILLES, cave.getNbBouteillesTheoriques());
+        if (cave.getPhoto() != null) {
+            values.put(PHOTO, cave.getPhoto());
+        }
+        open();
+        ret_value = mDb.update(TABLE_NAME, values, KEY  + " = ?", new String[] {String.valueOf(cave.getId())});
+        close();
+        return ret_value;
     }
 
     public long nbCave(){

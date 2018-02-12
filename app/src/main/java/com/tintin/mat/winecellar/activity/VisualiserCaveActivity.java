@@ -75,6 +75,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
 
     @Override
     public void onResume(){
+        CaveDao caveDao = new CaveDao(this, null);
+        cave = caveDao.get(cave.getId());
+        setTitle(cave.getNom());
         afficherListeClayettes();
         super.onResume();
 
@@ -89,6 +92,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
             case R.id.ajouter_bouteille:
                 ajouterBouteille();
                 return true;
+            case R.id.modify_cave:
+                modifierCave();
+                return true;
             case R.id.delete_cave:
                 deleteCave();
                 return true;
@@ -98,6 +104,12 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
 
     private void ajouterBouteille(){
         Intent appel = new Intent(this, AjouterBouteilleActivity.class);
+        appel.putExtra("Key", (Serializable) cave);
+        startActivity(appel);
+    }
+
+    private void modifierCave(){
+        Intent appel = new Intent(this, ModifierCaveActivity.class);
         appel.putExtra("Key", (Serializable) cave);
         startActivity(appel);
     }

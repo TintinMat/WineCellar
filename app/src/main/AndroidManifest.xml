@@ -31,6 +31,10 @@
             android:label="@string/add_cellar">
         </activity>
         <activity
+            android:name=".activity.ModifierCaveActivity"
+            android:label="@string/add_cellar">
+        </activity>
+        <activity
             android:name=".activity.VisualiserCaveActivity"
             android:label="@string/content_cellar">
         </activity>
