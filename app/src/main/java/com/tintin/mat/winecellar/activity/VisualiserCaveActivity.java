@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.adapter.ClayetteAdapter;
 import com.tintin.mat.winecellar.adapter.ClayetteSwipeAdapter;
@@ -126,7 +127,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
                 caveDao.supprimer(cave);
                 finish();
             } catch (Exception ex) {
-                Log.e(TAG, "deleteCave ", ex);
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "deleteCave ", ex);
+                }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_cave_ko, Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -241,7 +244,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
                         clayette.setNom(youEditTextValue.toString());
                         clayetteDao.modifier(clayette);
                     } catch (Exception ex) {
-                        Log.e(TAG, "editClayette ", ex);
+                        if (BuildConfig.DEBUG){
+                            Log.e(TAG, "editClayette ", ex);
+                        }
                         Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_clayette_ko, Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -282,7 +287,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
                     }
                     onResume();
                 } catch (Exception ex) {
-                    Log.e(TAG, "supprimerClayette ", ex);
+                    if (BuildConfig.DEBUG){
+                        Log.e(TAG, "supprimerClayette ", ex);
+                    }
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.message_supprimer_clayette_ko, Toast.LENGTH_LONG);
                     toast.show();
                 }

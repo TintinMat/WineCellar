@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.adapter.CaveAdapter;
 import com.tintin.mat.winecellar.bo.Appellation;
@@ -209,7 +210,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.putExtra("Key", (Serializable) cave);
                         startActivity(intent);
                     }catch(Exception e){
-                        Log.e(TAG, "isteViewCaves.setOnItemClickListener ",e );
+                        if (BuildConfig.DEBUG){
+                            Log.e(TAG, "isteViewCaves.setOnItemClickListener ",e );
+                        }
                     }
                 }
             });

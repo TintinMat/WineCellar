@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.bo.Appellation;
 import com.tintin.mat.winecellar.bo.Bouteille;
@@ -81,6 +82,7 @@ public class RechercheGlobaleActivity extends AppCompatActivity {
         Region regionTemplate = new Region();
         Millesime millTemplate = new Millesime();
 
+        boolean next = true;
         if (dansLannee.isChecked()){
             listeBouteillesTrouvees  = bDao.findToDrink();
         }else if (parCriteres.isChecked()){
@@ -94,7 +96,9 @@ public class RechercheGlobaleActivity extends AppCompatActivity {
                     try{
                         millTemplate.setAnnee(Integer.valueOf(text));
                     }catch(NumberFormatException e){
-                        Log.w(TAG, "rechercherBouteille ",e );
+                        if (BuildConfig.DEBUG){
+                            Log.w(TAG, "rechercherBouteille ",e );
+                        }
                     }
                     listeBouteillesTrouvees  = bDao.findWhere(bouteilleTemplate, appTemplate, regionTemplate, millTemplate);
 
@@ -108,7 +112,9 @@ public class RechercheGlobaleActivity extends AppCompatActivity {
                         try{
                             millTemplate.setAnnee(Integer.valueOf(text));
                         }catch(NumberFormatException e){
-                            Log.w(TAG, "rechercherBouteille ",e );
+                            if (BuildConfig.DEBUG){
+                                Log.w(TAG, "rechercherBouteille ",e );
+                            }
                         }
                         unChoix = true;
                     }
@@ -127,34 +133,40 @@ public class RechercheGlobaleActivity extends AppCompatActivity {
                     if (!unChoix){
                         Toast toast = Toast.makeText(getApplicationContext(), R.string.message_recherche_choix_champs_ko, Toast.LENGTH_LONG);
                         toast.show();
+                        next = false;
                     }else{
                         listeBouteillesTrouvees  = bDao.findWhere(bouteilleTemplate, appTemplate, regionTemplate, millTemplate);
                     }
                 }else {
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.message_recherche_choix_champs_ko, Toast.LENGTH_LONG);
                     toast.show();
+                    next = false;
                 }
 
             }else{
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_recherche_texte_ko, Toast.LENGTH_LONG);
                 toast.show();
+                next = false;
             }
 
         }else {
             Toast toast = Toast.makeText(getApplicationContext(), R.string.message_recherche_criteres_ko, Toast.LENGTH_LONG);
             toast.show();
+            next = false;
         }
 
-        if (listeBouteillesTrouvees.isEmpty()){
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.no_bouteille_recherche, Toast.LENGTH_LONG);
-            toast.show();
-        }else {
-            // on a la liste des id dans listeBouteillesTrouvees
-            // passer cette liste à la view
-            Intent intent = new Intent(RechercheGlobaleActivity.this, VisualiserRechercheActivity.class);
-            //based on item add info to intent
-            intent.putExtra("Key", (Serializable) listeBouteillesTrouvees);
-            startActivity(intent);
+        if (next) {
+            if (listeBouteillesTrouvees == null || listeBouteillesTrouvees.isEmpty()) {
+                Toast toast = Toast.makeText(getApplicationContext(), R.string.no_bouteille_recherche, Toast.LENGTH_LONG);
+                toast.show();
+            } else {
+                // on a la liste des id dans listeBouteillesTrouvees
+                // passer cette liste à la view
+                Intent intent = new Intent(RechercheGlobaleActivity.this, VisualiserRechercheActivity.class);
+                //based on item add info to intent
+                intent.putExtra("Key", (Serializable) listeBouteillesTrouvees);
+                startActivity(intent);
+            }
         }
 
     }

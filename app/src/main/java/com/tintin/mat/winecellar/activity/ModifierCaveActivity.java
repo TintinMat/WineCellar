@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.ResponseModels.InsertCaveResponseModel;
 import com.tintin.mat.winecellar.bo.Bouteille;
@@ -133,7 +134,9 @@ public class ModifierCaveActivity extends AppCompatActivity {
                 toast.show();
                 finish();
             }catch (Exception ex){
-                Log.e(TAG, "modifierCave ",ex );
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "modifierCave ",ex );
+                }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_cave_ko, Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -171,7 +174,9 @@ public class ModifierCaveActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             } catch (IOException ioe) {
-                Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                }
                 Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
             }
 

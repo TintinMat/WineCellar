@@ -23,6 +23,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.bo.Appellation;
 import com.tintin.mat.winecellar.bo.Bouteille;
@@ -166,7 +167,9 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
                 toast.show();
                 finish();
             }catch (Exception ex){
-                Log.e(TAG, "modifierBouteille ",ex );
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "modifierBouteille ",ex );
+                }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_bouteille_ko, Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -193,7 +196,9 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
             }
             finish();
         }catch (Exception ex){
-            Log.e(TAG, "supprimerBouteille ",ex );
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "supprimerBouteille ",ex );
+            }
             Toast toast = Toast.makeText(getApplicationContext(), R.string.message_supprimer_bouteille_ko, Toast.LENGTH_LONG);
             toast.show();
         }
@@ -672,7 +677,9 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
                 e.printStackTrace();
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             } catch (IOException ioe) {
-                Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                }
                 Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
             }
 

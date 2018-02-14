@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.tintin.mat.winecellar.BuildConfig;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -46,7 +48,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             setMode(this.ON_CREATE);
 
         }catch (SQLiteException ex){
-            Log.e(TAG, "onCreate: ",ex );
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "onCreate: ",ex );
+            }
         }
 
     }

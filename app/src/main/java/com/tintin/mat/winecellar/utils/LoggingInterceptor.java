@@ -6,6 +6,8 @@ package com.tintin.mat.winecellar.utils;
 
 import android.util.Log;
 
+import com.tintin.mat.winecellar.BuildConfig;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -30,7 +32,9 @@ public class LoggingInterceptor implements Interceptor {
         if (request.method().compareToIgnoreCase("post") == 0) {
             requestLog = "\n" + requestLog + "\n" + bodyToString(request);
         }
-        Log.d("TAG", "request" + "\n" + requestLog);
+        if (BuildConfig.DEBUG){
+            Log.d("TAG", "request" + "\n" + requestLog);
+        }
 
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
@@ -40,7 +44,9 @@ public class LoggingInterceptor implements Interceptor {
 
         String bodyString = response.body().string();
 
-        Log.d("TAG", "response" + "\n" + responseLog + "\n" + bodyString);
+        if (BuildConfig.DEBUG){
+            Log.d("TAG", "response" + "\n" + responseLog + "\n" + bodyString);
+        }
 
         return response.newBuilder()
                 .body(ResponseBody.create(response.body().contentType(), bodyString))

@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.bo.Cave;
 import com.tintin.mat.winecellar.bo.Region;
 
@@ -56,7 +57,9 @@ public class CaveDao extends DAOBase {
             ret_value = mDb.insert(TABLE_NAME, null, values);
             close();
         }catch(Exception e){
-            Log.e(TAG, "CaveDao.ajouter ", e);
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "CaveDao.ajouter ", e);
+            }
         }
         return ret_value;
 
@@ -132,7 +135,9 @@ public class CaveDao extends DAOBase {
                 while (cursor.moveToNext());
             }
         }catch(Exception e){
-            Log.e(TAG, "CaveDao.getAll ",e );
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "CaveDao.getAll ",e );
+            }
         }
         cursor.close();
         close();
