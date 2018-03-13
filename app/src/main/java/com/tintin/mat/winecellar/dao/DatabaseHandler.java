@@ -58,6 +58,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        /*
         db.execSQL(CepageBouteilleDao.TABLE_DROP);
         db.execSQL(CepageDao.TABLE_DROP);
         db.execSQL(BouteilleDao.TABLE_DROP);
@@ -68,7 +69,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(RegionDao.TABLE_DROP);
         db.execSQL(PaysDao.TABLE_DROP);
 
-        onCreate(db);
+        onCreate(db);*/
+        try {
+            db.execSQL(CaveDao.TABLE_UPDATE);
+            db.execSQL(BouteilleDao.TABLE_UPDATE);
+        } catch (SQLiteException ex) {
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "onUpgrade: ",ex );
+            }
+        }
 
         setMode(this.ON_UPDATE);
      }

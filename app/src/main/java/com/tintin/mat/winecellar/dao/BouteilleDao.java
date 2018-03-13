@@ -52,6 +52,8 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             "FOREIGN KEY("+ FK_APPELLATION +") REFERENCES "+ AppellationDao.TABLE_NAME +"("+ AppellationDao.KEY +")" +
             ");";
 
+    public static final String TABLE_UPDATE = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public BouteilleDao(Context pContext, DatabaseHandler databaseHandler) {

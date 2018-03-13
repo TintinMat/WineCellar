@@ -31,6 +31,8 @@ public class CaveDao extends ManageExternalFileSystemDao {
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY, " + NOM + " TEXT, " +
             NBBOUTEILLES + " INTEGER, " + PHOTO + " BLOB, " + PHOTO_PATH + " TEXT );";
 
+    public static final String TABLE_UPDATE = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public CaveDao(Context pContext, DatabaseHandler databaseHandler) {
