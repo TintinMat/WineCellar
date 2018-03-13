@@ -37,7 +37,6 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
     private ListView listeViewBouteilles;
     private BouteilleSwipeAdapter adapter;
     private Clayette clayette;
-    private BouteilleDao bouteilleDao = null;
     private SearchView searchView = null;
     private MenuItem searchMenuItem = null;
 

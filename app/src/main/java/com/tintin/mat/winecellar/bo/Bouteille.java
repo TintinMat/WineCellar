@@ -26,7 +26,7 @@ public class Bouteille implements Serializable {
     private int apogeeMax;
 
     private Clayette clayette;
-    private byte[] photo;
+    private String photoPath = null;
 
     public long getId() {
         return id;
@@ -132,12 +132,12 @@ public class Bouteille implements Serializable {
         this.bio = bio;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public int getApogeeMin() {

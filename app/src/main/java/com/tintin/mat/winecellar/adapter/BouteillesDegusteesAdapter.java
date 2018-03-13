@@ -80,8 +80,9 @@ public class BouteillesDegusteesAdapter extends ArrayAdapter<Bouteille> {
             String messageDateDegustation = getContext().getString(R.string.text_view_row_date_degustation, "? - ? - ?");
             viewHolder.dateDegustation.setText(messageDateDegustation);
         }
-        if (bouteille.getPhoto() != null) {
-            viewHolder.avatar.setImageBitmap(Utils.getImage(bouteille.getPhoto()));
+        if (bouteille.getPhotoPath() != null) {
+            //get bitmap from the Uri
+            viewHolder.avatar.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), getContext()));
         }else{
             viewHolder.avatar.setImageResource(R.drawable.glasses1);
         }

@@ -1,6 +1,7 @@
 package com.tintin.mat.winecellar.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -56,8 +57,9 @@ public class CaveAdapter extends ArrayAdapter<Cave> {
         //il ne reste plus qu'à remplir notre vue
         viewHolder.nomCave.setText("cave : " + cave.getNom());
         viewHolder.nbBouteilles.setText("nombre de bouteilles : "+listeBouteilles.size() +"/"+ cave.getNbBouteillesTheoriques());
-        if (cave.getPhoto() != null) {
-            viewHolder.avatar.setImageBitmap(Utils.getImage(cave.getPhoto()));
+        if (cave.getPhotoPath() != null) {
+            //get bitmap from the Uri
+            viewHolder.avatar.setImageBitmap(Utils.getImage(cave.getPhotoPath(), getContext()));
         }else{
             viewHolder.avatar.setImageResource(R.drawable.tonneau2);
         }

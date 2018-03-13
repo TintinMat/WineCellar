@@ -56,10 +56,11 @@ import static android.content.ContentValues.TAG;
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class ModifierBouteilleActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class ModifierBouteilleActivity extends StoragePermissions implements View.OnClickListener, View.OnFocusChangeListener {
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private byte[] inputDataForPhoto = null;
+    private Uri imageUri = null;
+
     private EditText dateDachatEditText;
     private int dateDachatIntFormat;
     private EditText dateDegustationEditText;
@@ -158,7 +159,10 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
             bouteille.setCouleur(couleurChosen);
             bouteille.setBio(bio.isChecked());
             bouteille.setAppellation(appellationChosen);
-            bouteille.setPhoto(inputDataForPhoto);
+            // récupérer la photo si non vide
+            if (imageUri != null && imageUri.toString().length() > 0) {
+                bouteille.setPhotoPath(imageUri.toString());
+            }
             bouteille.setApogeeMin(apogeeMinChosen);
             bouteille.setApogeeMax(apogeeMaxChosen);
             try{
@@ -636,9 +640,10 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
     /* méthode pour récupérer la photo */
 
     private void afficherPhoto(){
-        if (bouteille.getPhoto() != null && bouteille.getPhoto().length > 0) {
+        if (bouteille.getPhotoPath() != null && bouteille.getPhotoPath().toString().length() > 0) {
+
             ImageButton imageCaveButton = (ImageButton)findViewById(R.id.bouteillePhotoImageButton);
-            imageCaveButton.setImageBitmap(BitmapFactory.decodeByteArray(bouteille.getPhoto(), 0, bouteille.getPhoto().length));
+            imageCaveButton.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), this));
         }
     }
 
@@ -662,16 +667,13 @@ public class ModifierBouteilleActivity extends AppCompatActivity implements View
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)  {
             try {
-                final Uri imageUri = data.getData();
+                GrantPermissionsForWriting();
+                imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                // on sauve l'image en byte[] pour l'ajouter ensuite en base (methode ajouterBouteille)
-                InputStream imageStream2 = getContentResolver().openInputStream(imageUri);
-                inputDataForPhoto = Utils.getBytes(imageStream2);
                 ImageButton imageCaveButton = (ImageButton)findViewById(R.id.bouteillePhotoImageButton);
                 imageCaveButton.setImageBitmap(selectedImage);
                 if (imageStream != null) { imageStream.close();}
-                if (imageStream2 != null) { imageStream2.close();}
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

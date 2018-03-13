@@ -22,7 +22,7 @@ import java.util.Calendar;
  * Created by Mat & Audrey on 15/10/2017.
  */
 
-public class BouteilleDao extends DAOBase {
+public class BouteilleDao extends ManageExternalFileSystemDao {
 
     public static final String TABLE_NAME = "bouteille";
     public static final String KEY = "id";
@@ -37,6 +37,7 @@ public class BouteilleDao extends DAOBase {
     public static final String COMMENTAIRES = "commentaires";
     public static final String BIO = "bio";
     public static final String PHOTO = "photo";
+    public static final String PHOTO_PATH = "photo_path";
     public static final String APOGEEMIN = "apogeeMin";
     public static final String APOGEEMAX = "apogeeMax";
     public static final String FK_CLAYETTE = "clayette_id";
@@ -45,7 +46,7 @@ public class BouteilleDao extends DAOBase {
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DOMAINE + " TEXT, " + MILLESIME + " INTEGER, " +
             COULEUR + " INTEGER, " + PETILLANT + " INTEGER, " + PRIX + " REAL, " + LIEUDACHAT + " TEXT, " + DATEDACHAT + " INTEGER, " +  ANNEEDEGUSTATION + " INTEGER, " +
-            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " +
+            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + PHOTO_PATH + " TEXT,  "+ APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " +
             FK_CLAYETTE + " INTEGER, " + FK_APPELLATION + " INTEGER, " +
             "FOREIGN KEY("+ FK_CLAYETTE +") REFERENCES "+ ClayetteDao.TABLE_NAME +"("+ ClayetteDao.KEY +")" +
             "FOREIGN KEY("+ FK_APPELLATION +") REFERENCES "+ AppellationDao.TABLE_NAME +"("+ AppellationDao.KEY +")" +
@@ -55,6 +56,7 @@ public class BouteilleDao extends DAOBase {
 
     public BouteilleDao(Context pContext, DatabaseHandler databaseHandler) {
         super(pContext, databaseHandler);
+        myContext = pContext;
     }
 
     /**
@@ -93,8 +95,10 @@ public class BouteilleDao extends DAOBase {
         if (bouteille.getClayette() != null) {
             values.put(FK_CLAYETTE, bouteille.getClayette().getId());
         }
-        if (bouteille.getPhoto() != null) {
-            values.put(PHOTO, bouteille.getPhoto());
+        if (bouteille.getPhotoPath() != null) {
+            // on insere la photo sur le disque
+            String pathImage = saveImageToExternalStorage(bouteille.getPhotoPath());
+            values.put(PHOTO_PATH, pathImage);
         }
         if (bouteille.getApogeeMin() > 0){
             values.put(APOGEEMIN, bouteille.getApogeeMin());
@@ -113,6 +117,7 @@ public class BouteilleDao extends DAOBase {
 
     public long modifier(Bouteille bouteille){
         long ret_value = -1;
+        open();
 
         ContentValues values = new ContentValues();
         if (bouteille.getDomaine() != null && bouteille.getDomaine().length() > 0) {
@@ -144,8 +149,14 @@ public class BouteilleDao extends DAOBase {
         if (bouteille.getClayette() != null) {
             values.put(FK_CLAYETTE, bouteille.getClayette().getId());
         }
-        if (bouteille.getPhoto() != null) {
-            values.put(PHOTO, bouteille.getPhoto());
+        if (bouteille.getPhotoPath() != null) {
+            // on insere la photo sur le disque
+            String pathImage = saveImageToExternalStorage(bouteille.getPhotoPath());
+            values.put(PHOTO_PATH, pathImage);
+            // supprimer la photo précédente
+            Bouteille oldBouteille = getWithAllDependenciesWithoutOpeningConnection(bouteille);
+            // supprimer la photo sur le fs
+            deleteImageFromExternalStorage(oldBouteille.getPhotoPath());
         }
         if (bouteille.getApogeeMin() > 0){
             values.put(APOGEEMIN, bouteille.getApogeeMin());
@@ -156,7 +167,7 @@ public class BouteilleDao extends DAOBase {
         values.put(ANNEEDEGUSTATION, bouteille.getAnneeDegustation());
         values.put(DATEDACHAT, bouteille.getDateDachat());
         values.put(FK_APPELLATION, bouteille.getAppellation().getId());
-        open();
+
         ret_value = mDb.update(TABLE_NAME, values, KEY  + " = ?", new String[] {String.valueOf(bouteille.getId())});
         close();
         return ret_value;
@@ -195,7 +206,7 @@ public class BouteilleDao extends DAOBase {
                 if (cursor.getInt(cursor.getColumnIndex(ANNEEDEGUSTATION)) == 0) {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                    bouteille.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                    bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                         bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -227,7 +238,7 @@ public class BouteilleDao extends DAOBase {
                 if (cursor.getInt(cursor.getColumnIndex(ANNEEDEGUSTATION)) == 0) {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                    bouteille.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                    bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                         bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -257,7 +268,7 @@ public class BouteilleDao extends DAOBase {
                 if (cursor.getInt(cursor.getColumnIndex(ANNEEDEGUSTATION)) > 0) {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                    bouteille.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                    bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     bouteille.setAnneeDegustation(cursor.getInt(cursor.getColumnIndex(ANNEEDEGUSTATION)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
@@ -326,7 +337,7 @@ public class BouteilleDao extends DAOBase {
         if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
             bouteille = new Bouteille();
             bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-            bouteille.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+            bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
             bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
             if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                 bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -378,7 +389,7 @@ public class BouteilleDao extends DAOBase {
             if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
                 bouteille = new Bouteille();
                 bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                bouteille.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
                 bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                 if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                     bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -421,7 +432,12 @@ public class BouteilleDao extends DAOBase {
 
     public int supprimer(Bouteille bouteille){
         open();
+        // supprimer la photo sur le fs
+        String photoPath = bouteille.getPhotoPath();
         int ret = mDb.delete(TABLE_NAME, " "+KEY+"=?", new String[]{new Long(bouteille.getId()).toString()});
+        if (ret>0){
+            deleteImageFromExternalStorage(photoPath);
+        }
         close();
         return ret;
     }

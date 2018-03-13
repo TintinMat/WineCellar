@@ -1,5 +1,8 @@
 package com.tintin.mat.winecellar.bo;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
@@ -11,7 +14,7 @@ public class Cave implements Serializable {
     private long id;
     private String nom;
     private int nbBouteillesTheoriques;
-    private byte[] photo;
+    private String photoPath = null;
 
     public Cave() {
     }
@@ -44,12 +47,12 @@ public class Cave implements Serializable {
         this.nbBouteillesTheoriques = nbBouteillesTheoriques;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     @Override

@@ -56,10 +56,10 @@ import static android.content.ContentValues.TAG;
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class AjouterBouteilleActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class AjouterBouteilleActivity extends StoragePermissions implements View.OnClickListener, View.OnFocusChangeListener {
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private byte[] inputDataForPhoto = null;
+    private Uri imageUri = null;
     private EditText dateDachatEditText;
     private int dateDachatIntFormat;
 
@@ -151,7 +151,7 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
                 b.setCouleur(couleurChosen);
                 b.setBio(bio.isChecked());
                 b.setAppellation(appellationChosen);
-                b.setPhoto(inputDataForPhoto);
+                b.setPhotoPath(imageUri.toString());
                 b.setApogeeMin(apogeeMinChosen);
                 b.setApogeeMax(apogeeMaxChosen);
                 try{
@@ -489,16 +489,13 @@ public class AjouterBouteilleActivity extends AppCompatActivity implements View.
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)  {
             try {
-                final Uri imageUri = data.getData();
+                GrantPermissionsForWriting();
+                imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                // on sauve l'image en byte[] pour l'ajouter ensuite en base (methode ajouterBouteille)
-                InputStream imageStream2 = getContentResolver().openInputStream(imageUri);
-                inputDataForPhoto = Utils.getBytes(imageStream2);
                 ImageButton imageCaveButton = (ImageButton)findViewById(R.id.bouteillePhotoImageButton);
                 imageCaveButton.setImageBitmap(selectedImage);
                 if (imageStream != null) { imageStream.close();}
-                if (imageStream2 != null) { imageStream2.close();}
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

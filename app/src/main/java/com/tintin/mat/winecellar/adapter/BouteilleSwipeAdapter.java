@@ -93,8 +93,9 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterabl
             String messageDateMillesime = context.getString(R.string.text_view_row_no_millesime, "-");
             milesime.setText(messageDateMillesime);
         }
-        if (bouteille.getPhoto() != null) {
-            avatar.setImageBitmap(Utils.getImage(bouteille.getPhoto()));
+        if (bouteille.getPhotoPath() != null) {
+            //get bitmap from the Uri
+            avatar.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), context));
         }else{
             avatar.setImageResource(R.drawable.glasses1);
         }

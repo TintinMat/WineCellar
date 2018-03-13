@@ -1,11 +1,16 @@
 package com.tintin.mat.winecellar.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +31,7 @@ import com.tintin.mat.winecellar.utils.ApiClient;
 import com.tintin.mat.winecellar.utils.ApiService;
 import com.tintin.mat.winecellar.utils.Utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,10 +46,10 @@ import static android.content.ContentValues.TAG;
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class AjouterCaveActivity extends AppCompatActivity {
+public class AjouterCaveActivity extends StoragePermissions {
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private byte[] inputDataForPhoto = null;
+    private Uri imageUri = null;
 
     private ProgressDialog progressDialog;
     
@@ -89,7 +95,7 @@ public class AjouterCaveActivity extends AppCompatActivity {
             CaveDao caveDao = new CaveDao(this, null);
             try{
                 // récupérer la photo
-                cave.setPhoto(inputDataForPhoto);
+                cave.setPhotoPath(imageUri.toString());
                 long idCave = caveDao.ajouter(cave);
                 cave.setId(idCave);
                 ClayetteDao clayetteDao = new ClayetteDao(this, null);
@@ -98,7 +104,6 @@ public class AjouterCaveActivity extends AppCompatActivity {
                 }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_cave_ok, Toast.LENGTH_LONG);
                 toast.show();
-                //insertData(cave);
                 finish();
             }catch (Exception ex){
                 if (BuildConfig.DEBUG){
@@ -116,8 +121,6 @@ public class AjouterCaveActivity extends AppCompatActivity {
 
 
     public void takePhoto(View view){
-        //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //startActivityForResult(i, RESULT_LOAD_IMAGE);
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
@@ -128,16 +131,13 @@ public class AjouterCaveActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)  {
             try {
-                final Uri imageUri = data.getData();
+                GrantPermissionsForWriting();
+                imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                // on sauve l'image en byte[] pour l'ajouter ensuite en base (methode ajouterCave)
-                InputStream imageStream2 = getContentResolver().openInputStream(imageUri);
-                inputDataForPhoto = Utils.getBytes(imageStream2);
                 ImageButton imageCaveButton = (ImageButton)findViewById(R.id.cavePhotoImageButton);
                 imageCaveButton.setImageBitmap(selectedImage);
                 if (imageStream != null) { imageStream.close();}
-                if (imageStream2 != null) { imageStream2.close();}
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -153,6 +153,14 @@ public class AjouterCaveActivity extends AppCompatActivity {
             Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();
         }
     }
+
+
+
+
+
+
+
+
 
 
 

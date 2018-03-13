@@ -43,13 +43,13 @@ import static android.content.ContentValues.TAG;
  * Created by Mat & Audrey on 18/10/2017.
  */
 
-public class ModifierCaveActivity extends AppCompatActivity {
+public class ModifierCaveActivity extends StoragePermissions {
 
     private CaveDao caveDao = null;
     private Cave cave;
 
     private static int RESULT_LOAD_IMAGE = 1;
-    private byte[] inputDataForPhoto = null;
+    private Uri imageUri = null;
 
     private ProgressDialog progressDialog;
     
@@ -123,8 +123,8 @@ public class ModifierCaveActivity extends AppCompatActivity {
             CaveDao caveDao = new CaveDao(this, null);
             try{
                 // récupérer la photo si non vide
-                if (inputDataForPhoto != null && inputDataForPhoto.length > 0) {
-                    cave.setPhoto(inputDataForPhoto);
+                if (imageUri != null && imageUri.toString().length() > 0) {
+                    cave.setPhotoPath(imageUri.toString());
                 }
                 cave.setNom(nomCave.getText().toString());
                 cave.setNbBouteillesTheoriques(new Integer(nbBouteilles.getText().toString()));
@@ -154,21 +154,18 @@ public class ModifierCaveActivity extends AppCompatActivity {
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMAGE);
     }
 
-    @Override
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)  {
             try {
-                final Uri imageUri = data.getData();
+                GrantPermissionsForWriting();
+                imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                // on sauve l'image en byte[] pour l'ajouter ensuite en base (methode ajouterCave)
-                InputStream imageStream2 = getContentResolver().openInputStream(imageUri);
-                inputDataForPhoto = Utils.getBytes(imageStream2);
-                ImageButton imageCaveButton = (ImageButton)findViewById(R.id.cavePhotoModifierImageButton);
+                ImageButton imageCaveButton = (ImageButton)findViewById(R.id.cavePhotoImageButton);
                 imageCaveButton.setImageBitmap(selectedImage);
                 if (imageStream != null) { imageStream.close();}
-                if (imageStream2 != null) { imageStream2.close();}
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

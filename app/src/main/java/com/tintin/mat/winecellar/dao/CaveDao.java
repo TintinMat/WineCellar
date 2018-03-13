@@ -4,12 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.tintin.mat.winecellar.BuildConfig;
+import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.bo.Cave;
-import com.tintin.mat.winecellar.bo.Region;
 
 import java.util.ArrayList;
 
@@ -19,28 +18,31 @@ import static android.content.ContentValues.TAG;
  * Created by Mat & Audrey on 15/10/2017.
  */
 
-public class CaveDao extends DAOBase {
+public class CaveDao extends ManageExternalFileSystemDao {
 
     public static final String TABLE_NAME = "cave";
     public static final String KEY = "id";
     public static final String NOM = "nom";
     public static final String NBBOUTEILLES = "nb_bouteilles_theoriques";
     public static final String PHOTO = "photo";
+    public static final String PHOTO_PATH = "photo_path";
+
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY, " + NOM + " TEXT, " +
-            NBBOUTEILLES + " INTEGER, " + PHOTO + " BLOB);";
+            NBBOUTEILLES + " INTEGER, " + PHOTO + " BLOB, " + PHOTO_PATH + " TEXT );";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
     public CaveDao(Context pContext, DatabaseHandler databaseHandler) {
         super(pContext, databaseHandler);
+        myContext = pContext;
+
     }
 
     /**
      * @param cave la cave à ajouter à la base
      */
     public long ajouter(Cave cave) {
-        // CODE
         long ret_value = -1;
 
         try {
@@ -50,9 +52,12 @@ public class CaveDao extends DAOBase {
                 values.put(NOM, cave.getNom());
             }
             values.put(NBBOUTEILLES, cave.getNbBouteillesTheoriques());
-            if (cave.getPhoto() != null) {
-                values.put(PHOTO, cave.getPhoto());
+            if (cave.getPhotoPath() != null) {
+                // on insere la photo sur le disque
+                String pathImage = saveImageToExternalStorage(cave.getPhotoPath());
+                values.put(PHOTO_PATH, pathImage);
             }
+
             open();
             ret_value = mDb.insert(TABLE_NAME, null, values);
             close();
@@ -74,7 +79,7 @@ public class CaveDao extends DAOBase {
             do {
                 cave = new Cave(cursor.getString(cursor.getColumnIndex(NOM)), cursor.getInt(cursor.getColumnIndex(NBBOUTEILLES)));
                 cave.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                cave.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                cave.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
             }
             while (cursor.moveToNext());
         }
@@ -84,12 +89,15 @@ public class CaveDao extends DAOBase {
     }
 
     public boolean supprimer(Cave cave) {
-        // CODE
         open();
         boolean ret_value = false;
         // d'abord supprimer les clayettes associées
         if ( mDb.delete(ClayetteDao.TABLE_NAME, " "+ClayetteDao.FK_CAVE+"="+cave.getId(), null) != -1){
             ret_value = (mDb.delete(TABLE_NAME, " "+KEY+"="+cave.getId(), null) > 0) ;
+            // supprimer la photo précédente
+            if (ret_value && cave.getPhotoPath() != null) {
+                deleteImageFromExternalStorage(cave.getPhotoPath());
+            }
         }
         close();
         return ret_value;
@@ -98,13 +106,18 @@ public class CaveDao extends DAOBase {
 
     public long modifier(Cave cave) {
 
+        Cave oldCave = get(cave.getId());
         long ret_value = -1;
 
         ContentValues values = new ContentValues();
         values.put(NOM, cave.getNom());
         values.put(NBBOUTEILLES, cave.getNbBouteillesTheoriques());
-        if (cave.getPhoto() != null) {
-            values.put(PHOTO, cave.getPhoto());
+        if (cave.getPhotoPath() != null) {
+            // on insere la photo sur le disque
+            String pathImage = saveImageToExternalStorage(cave.getPhotoPath());
+            values.put(PHOTO_PATH, pathImage);
+            // supprimer la photo sur le fs
+            deleteImageFromExternalStorage(oldCave.getPhotoPath());
         }
         open();
         ret_value = mDb.update(TABLE_NAME, values, KEY  + " = ?", new String[] {String.valueOf(cave.getId())});
@@ -129,7 +142,7 @@ public class CaveDao extends DAOBase {
                 do {
                     Cave cave = new Cave(cursor.getString(cursor.getColumnIndex(NOM)), cursor.getInt(cursor.getColumnIndex(NBBOUTEILLES)));
                     cave.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
-                    cave.setPhoto(cursor.getBlob(cursor.getColumnIndex(PHOTO)));
+                    cave.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
                     listCaves.add(cave);
                 }
                 while (cursor.moveToNext());
