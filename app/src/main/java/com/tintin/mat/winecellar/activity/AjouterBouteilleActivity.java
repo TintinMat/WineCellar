@@ -136,6 +136,8 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
 
     private class ProgressTask extends AsyncTask<Void,Void,Void> {
         private String seq = "";
+        private int seqInt = -1;
+        private boolean okToAdd = false;
 
         @Override
         protected void onPreExecute(){
@@ -143,28 +145,40 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
 
             EditText nomDomaine = (EditText)findViewById(R.id.nomDomaineEditText);
             if (nomDomaine == null || nomDomaine.getText().length()==0){
-                Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_nomDomaine, Toast.LENGTH_LONG);
-                toast.show();
+                okToAdd = false;
+                seqInt = R.string.message_creation_bouteille_ko_nomDomaine;
             } else if (clayetteChosen == null || clayetteChosen.toString() == null || clayetteChosen.toString().length()==0){
-                Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_clayette, Toast.LENGTH_LONG);
-                toast.show();
+                okToAdd = false;
+                seqInt = R.string.message_creation_bouteille_ko_clayette;
+            }else {
+                okToAdd = true;
             };
         }
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            seq = ajouterBouteille();
+            if (okToAdd){
+                seq = ajouterBouteille();
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
             bar.setVisibility(View.GONE);
-            if (seq.length() >0) {
-                Toast toast = Toast.makeText(getApplicationContext(), seq, Toast.LENGTH_LONG);
-                toast.show();
-                finish();
+            if (okToAdd){
+                if (seq.length() >0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), seq, Toast.LENGTH_LONG);
+                    toast.show();
+                    finish();
+                }
+            }else{
+                if (seqInt > -1) {
+                    Toast toast = Toast.makeText(getApplicationContext(), seqInt, Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
+
         }
     }
 
