@@ -57,9 +57,9 @@ public class CaveAdapter extends ArrayAdapter<Cave> {
         //il ne reste plus qu'à remplir notre vue
         viewHolder.nomCave.setText("cave : " + cave.getNom());
         viewHolder.nbBouteilles.setText("nombre de bouteilles : "+listeBouteilles.size() +"/"+ cave.getNbBouteillesTheoriques());
-        if (cave.getPhotoPath() != null) {
+        if (cave.getVignettePath() != null) {
             //get bitmap from the Uri
-            viewHolder.avatar.setImageBitmap(Utils.getImage(cave.getPhotoPath(), getContext()));
+            viewHolder.avatar.setImageBitmap(Utils.getImage(cave.getVignettePath(), getContext()));
         }else{
             viewHolder.avatar.setImageResource(R.drawable.tonneau2);
         }

@@ -1,6 +1,14 @@
 package com.tintin.mat.winecellar.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +27,9 @@ import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.interfce.BouteilleInterface;
 import com.tintin.mat.winecellar.utils.Utils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -34,11 +44,30 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterabl
     private List<Bouteille> filteredList;
     private BouteilleFilter bouteilleFilter;
 
+    private LruCache<String, Bitmap> mMemoryCache;
+
     public BouteilleSwipeAdapter(Context context, List<Bouteille> bouteilles, BouteilleInterface listener) {
         this.context = context;
         this.listener=listener;
         this.bouteilles = bouteilles;
         this.filteredList = bouteilles;
+
+        // Get max available VM memory, exceeding this amount will throw an
+        // OutOfMemory exception. Stored in kilobytes as LruCache takes an
+        // int in its constructor.
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 8;
+
+        mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                return bitmap.getByteCount() / 1024;
+            }
+        };
 
         getFilter();
     }
@@ -93,9 +122,24 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterabl
             String messageDateMillesime = context.getString(R.string.text_view_row_no_millesime, "-");
             milesime.setText(messageDateMillesime);
         }
-        if (bouteille.getPhotoPath() != null) {
+        if (bouteille.getVignettePath() != null && bouteille.getVignettePath().length()>0) {
             //get bitmap from the Uri
-            avatar.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), context));
+            //avatar.setImageBitmap(Utils.getImage(bouteille.getVignetteBitmap()));
+            //avatar.setImageBitmap(BitmapFactory.decodeFile(Uri.parse(bouteille.getVignettePath()).getPath()));
+
+            final Bitmap bitmap = getBitmapFromMemCache(bouteille.getVignettePath());
+            if (bitmap != null) {
+                avatar.setImageBitmap(bitmap);
+            } else {
+                if (cancelPotentialDownload(bouteille.getVignettePath(), avatar)) {
+                    BitmapDownloaderTask task = new BitmapDownloaderTask(avatar, bouteille);
+                    DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
+                    avatar.setImageDrawable(downloadedDrawable);
+                    task.execute();
+                }
+            }
+
+
         }else{
             avatar.setImageResource(R.drawable.glasses1);
         }
@@ -110,6 +154,106 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterabl
         });
 
     }
+
+    /****************************************/
+    /****************************************/
+
+    private static boolean cancelPotentialDownload(String url, ImageView imageView) {
+        BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
+
+        if (bitmapDownloaderTask != null) {
+            String vignettePath = bitmapDownloaderTask.bouteille.getVignettePath() ;
+            if ((vignettePath == null) || (!vignettePath.equals(url))) {
+                bitmapDownloaderTask.cancel(true);
+            } else {
+                // The same URL is already being downloaded.
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static BitmapDownloaderTask getBitmapDownloaderTask(ImageView imageView) {
+        if (imageView != null) {
+            Drawable drawable = imageView.getDrawable();
+            if (drawable instanceof DownloadedDrawable) {
+                DownloadedDrawable downloadedDrawable = (DownloadedDrawable)drawable;
+                return downloadedDrawable.getBitmapDownloaderTask();
+            }
+        }
+        return null;
+    }
+
+    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemCache(key) == null) {
+            Bitmap o = mMemoryCache.put(key, bitmap);
+            //System.out.println("bonjour ");
+        }
+    }
+
+    public Bitmap getBitmapFromMemCache(String key) {
+        return mMemoryCache.get(key);
+    }
+
+    class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+        private LinkedHashMap l;
+        private final /*WeakReference<ImageView>*/ ImageView imageViewReference;
+        private Bouteille bouteille;
+
+        public BitmapDownloaderTask(ImageView imageView, Bouteille bouteille) {
+            //imageViewReference = new WeakReference<ImageView>(imageView);
+            imageViewReference = imageView;
+            this.bouteille = bouteille;
+        }
+
+        @Override
+        // Actual download method, run in the task thread
+        protected Bitmap doInBackground(String... params) {
+            // params comes from the execute() call.
+            final Bitmap bitmap = BitmapFactory.decodeFile(Uri.parse(bouteille.getVignettePath()).getPath());
+            addBitmapToMemoryCache(bouteille.getVignettePath(), bitmap);
+            return bitmap;
+            //return Utils.getImage(bouteille.getVignetteBitmap());
+        }
+
+        @Override
+        // Once the image is downloaded, associates it to the imageView
+        protected void onPostExecute(Bitmap bitmap) {
+            if (isCancelled()) {
+                bitmap = null;
+            }
+
+            if (imageViewReference != null) {
+                //ImageView imageView = imageViewReference.get();
+                BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageViewReference);
+                // Change bitmap only if this process is still associated with it
+                if (this == bitmapDownloaderTask) {
+                    imageViewReference.setImageBitmap(bitmap);
+                }
+            }
+
+        }
+    }
+
+    static class DownloadedDrawable extends ColorDrawable {
+        private final WeakReference<BitmapDownloaderTask> bitmapDownloaderTaskReference;
+
+        public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
+            super(Color.BLACK);
+            //avatar.setImageResource(R.drawable.glasses1);
+            bitmapDownloaderTaskReference =
+                    new WeakReference<BitmapDownloaderTask>(bitmapDownloaderTask);
+        }
+
+        public BitmapDownloaderTask getBitmapDownloaderTask() {
+            return bitmapDownloaderTaskReference.get();
+        }
+    }
+
+
+    /****************************************/
+    /****************************************/
+
 
     @Override
     public int getCount() {

@@ -39,6 +39,7 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
     private Clayette clayette;
     private SearchView searchView = null;
     private MenuItem searchMenuItem = null;
+    private long idCave;
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -72,6 +73,9 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
         setContentView(R.layout.activity_visualiser_clayette);
         // récupération de la clayette passée en paramètre
         clayette = (Clayette) getIntent().getExtras().get("Key");
+        if (getIntent().getExtras().get("idCave") != null) {
+            idCave = (long)getIntent().getExtras().get("idCave");
+        }
         // mettre ici le nom de la clayette passée en paramètre
         setTitle(clayette.getNom());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -103,6 +107,7 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
     private void ajouterBouteille(){
         Intent appel = new Intent(this, AjouterBouteilleActivity.class);
         appel.putExtra("KeyClayette", (Serializable) clayette);
+        appel.putExtra("idCave", idCave);
         startActivity(appel);
     }
 

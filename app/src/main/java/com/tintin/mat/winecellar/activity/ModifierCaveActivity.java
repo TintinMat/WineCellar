@@ -163,7 +163,7 @@ public class ModifierCaveActivity extends StoragePermissions {
                 imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                ImageButton imageCaveButton = (ImageButton)findViewById(R.id.cavePhotoImageButton);
+                ImageButton imageCaveButton = (ImageButton)findViewById(R.id.cavePhotoModifierImageButton);
                 imageCaveButton.setImageBitmap(selectedImage);
                 if (imageStream != null) { imageStream.close();}
 

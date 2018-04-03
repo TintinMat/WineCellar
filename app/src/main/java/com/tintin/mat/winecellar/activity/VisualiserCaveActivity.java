@@ -106,6 +106,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
     private void ajouterBouteille(){
         Intent appel = new Intent(this, AjouterBouteilleActivity.class);
         appel.putExtra("Key", (Serializable) cave);
+        if (cave != null) {
+            appel.putExtra("idCave", cave.getId());
+        }
         startActivity(appel);
     }
 
@@ -167,8 +170,11 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Clayette c = (Clayette) adapter.getItem(position);
 
-                    Intent intent = new Intent(VisualiserCaveActivity.this,VisualiserClayetteActivity.class);
+                    Intent intent = new Intent(VisualiserCaveActivity.this, VisualiserClayetteActivity.class);
                     intent.putExtra("Key", (Serializable) c);
+                    if (cave != null) {
+                        intent.putExtra("idCave", cave.getId());
+                    }
                     startActivity(intent);
                     //Log.e("ListView", "onItemClick : position "+position);
 

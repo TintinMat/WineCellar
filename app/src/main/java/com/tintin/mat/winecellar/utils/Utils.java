@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.tintin.mat.winecellar.BuildConfig;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,26 +34,51 @@ public class Utils {
     public static Bitmap getImage(String photoPath, Context myContext){
         InputStream imageStream = null;
         Bitmap finalBitmap = null;
-        try {
-            imageStream = myContext.getContentResolver().openInputStream(Uri.parse(photoPath));
-            finalBitmap = BitmapFactory.decodeStream(imageStream);
-            if (imageStream != null) { imageStream.close();}
-        } catch (FileNotFoundException e) {
-            if (BuildConfig.DEBUG){
-                Log.e(TAG, "<getImage> Error : " + e.getLocalizedMessage());
-            }
-        }catch (IOException ioe) {
-            if (BuildConfig.DEBUG){
-                Log.e(TAG, "<getImage> Error : " + ioe.getLocalizedMessage());
+        if (photoPath != null && photoPath.length()>0) {
+            try {
+                imageStream = myContext.getContentResolver().openInputStream(Uri.parse(photoPath));
+                finalBitmap = BitmapFactory.decodeStream(imageStream);
+                if (imageStream != null) {
+                    imageStream.close();
+                }
+            } catch (FileNotFoundException e) {
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "<getImage> Error : " + e.getLocalizedMessage());
+                }
+            } catch (IOException ioe) {
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "<getImage> Error : " + ioe.getLocalizedMessage());
+                }
             }
         }
         return finalBitmap;
     }
 
     public static byte[] getImageBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
+        if (bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
+        }else{
+            return null;
+        }
+    }
+
+    public static byte[] getImageBytes(String photoPath, Context myContext){
+        if (photoPath != null && photoPath.length()>0) {
+            File f = new File(Uri.parse(photoPath).getPath());
+            try {
+                return FileUtils.readFileToByteArray(f);
+            } catch (IOException e) {
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "<getImageBytes> Error : " + e.getLocalizedMessage());
+                }
+                return null;
+            }
+        }
+        return null;
+
+        //return getImageBytes(getImage(photPath, myContext));
     }
 
     public static Bitmap getImage(byte[] image) {
@@ -111,11 +138,39 @@ public class Utils {
         return file;
     }
 
+    public static File getPublicVignetteStorageDir(String albumName) {
+        // Get the directory for the user's public pictures directory.
+        File file = new File(getPublicAlbumStorageDir(albumName), "vignettes");
+        if (!file.mkdirs()) {
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "Directory not created " );
+            }
+        }
+        return file;
+    }
 
 
-    public static String getApplicationName(Context context) {
+    public static String getApplicationFullName(Context context){
+        if (getPackageName(context).length() > 0) {
+            return getPackageName(context) + "." + getApplicationName(context);
+        }else{
+            return getApplicationName(context);
+        }
+    }
+
+    private static String getApplicationName(Context context) {
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         int stringId = applicationInfo.labelRes;
         return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
+    }
+
+    private static String getPackageName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        if (applicationInfo != null) {
+            return applicationInfo.packageName;
+        }
+        else{
+            return "";
+        }
     }
 }

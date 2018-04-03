@@ -14,9 +14,11 @@ import com.tintin.mat.winecellar.bo.Millesime;
 import com.tintin.mat.winecellar.bo.Pays;
 import com.tintin.mat.winecellar.bo.Petillant;
 import com.tintin.mat.winecellar.bo.Region;
+import com.tintin.mat.winecellar.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Mat & Audrey on 15/10/2017.
@@ -38,6 +40,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
     public static final String BIO = "bio";
     public static final String PHOTO = "photo";
     public static final String PHOTO_PATH = "photo_path";
+    public static final String VIGNETTE_PATH = "vignette_path";
     public static final String APOGEEMIN = "apogeeMin";
     public static final String APOGEEMAX = "apogeeMax";
     public static final String FK_CLAYETTE = "clayette_id";
@@ -46,13 +49,14 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DOMAINE + " TEXT, " + MILLESIME + " INTEGER, " +
             COULEUR + " INTEGER, " + PETILLANT + " INTEGER, " + PRIX + " REAL, " + LIEUDACHAT + " TEXT, " + DATEDACHAT + " INTEGER, " +  ANNEEDEGUSTATION + " INTEGER, " +
-            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + PHOTO_PATH + " TEXT,  "+ APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " +
+            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + PHOTO_PATH + " TEXT,  " + VIGNETTE_PATH + " TEXT,  "+ APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " +
             FK_CLAYETTE + " INTEGER, " + FK_APPELLATION + " INTEGER, " +
             "FOREIGN KEY("+ FK_CLAYETTE +") REFERENCES "+ ClayetteDao.TABLE_NAME +"("+ ClayetteDao.KEY +")" +
             "FOREIGN KEY("+ FK_APPELLATION +") REFERENCES "+ AppellationDao.TABLE_NAME +"("+ AppellationDao.KEY +")" +
             ");";
 
-    public static final String TABLE_UPDATE = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+    public static final String TABLE_UPDATE_V2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+    public static final String TABLE_UPDATE_V3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + VIGNETTE_PATH + " TEXT ;";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -99,8 +103,11 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         }
         if (bouteille.getPhotoPath() != null) {
             // on insere la photo sur le disque
-            String pathImage = saveImageToExternalStorage(bouteille.getPhotoPath());
-            values.put(PHOTO_PATH, pathImage);
+            List<String> paths = saveImageToExternalStorage(bouteille.getPhotoPath());
+            if (paths != null && paths.size()>1) {
+                values.put(PHOTO_PATH, paths.get(0));
+                values.put(VIGNETTE_PATH, paths.get(1));
+            }
         }
         if (bouteille.getApogeeMin() > 0){
             values.put(APOGEEMIN, bouteille.getApogeeMin());
@@ -153,12 +160,18 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         }
         if (bouteille.getPhotoPath() != null) {
             // on insere la photo sur le disque
-            String pathImage = saveImageToExternalStorage(bouteille.getPhotoPath());
-            values.put(PHOTO_PATH, pathImage);
+            List<String> paths = saveImageToExternalStorage(bouteille.getPhotoPath());
+            if (paths != null && paths.size()>1) {
+                values.put(PHOTO_PATH, paths.get(0));
+                values.put(VIGNETTE_PATH, paths.get(1));
+            }
             // supprimer la photo précédente
             Bouteille oldBouteille = getWithAllDependenciesWithoutOpeningConnection(bouteille);
-            // supprimer la photo sur le fs
-            deleteImageFromExternalStorage(oldBouteille.getPhotoPath());
+            if (oldBouteille != null) {
+                // supprimer la photo sur le fs
+                deleteImageFromExternalStorage(oldBouteille.getPhotoPath());
+                deleteImageFromExternalStorage(oldBouteille.getVignettePath());
+            }
         }
         if (bouteille.getApogeeMin() > 0){
             values.put(APOGEEMIN, bouteille.getApogeeMin());
@@ -209,6 +222,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                     bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                    bouteille.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
+                    // on insere en memoire les vignettes en byte[] pour que la liste des bouteilles soit fluide (pas de transformation en bitmap à la volée)
+                    //bouteille.setVignetteBitmap(Utils.getImageBytes(bouteille.getVignettePath(), myContext));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                         bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -241,6 +257,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                     bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                    bouteille.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
+                    // on insere en memoire les vignettes en byte[] pour que la liste des bouteilles soit fluide (pas de transformation en bitmap à la volée)
+                   // bouteille.setVignetteBitmap(Utils.getImageBytes(bouteille.getVignettePath(), myContext));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                         bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -271,6 +290,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                     Bouteille bouteille = new Bouteille();
                     bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                     bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                    bouteille.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
+                    // on insere en memoire les vignettes en byte[] pour que la liste des bouteilles soit fluide (pas de transformation en bitmap à la volée)
+                    //bouteille.setVignetteBitmap(Utils.getImageBytes(bouteille.getVignettePath(), myContext));
                     bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                     bouteille.setAnneeDegustation(cursor.getInt(cursor.getColumnIndex(ANNEEDEGUSTATION)));
                     if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
@@ -340,6 +362,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             bouteille = new Bouteille();
             bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
             bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+            bouteille.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
+            // on insere en memoire les vignettes en byte[] pour que la liste des bouteilles soit fluide (pas de transformation en bitmap à la volée)
+            //bouteille.setVignetteBitmap(Utils.getImageBytes(bouteille.getVignettePath(), myContext));
             bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
             if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                 bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -392,6 +417,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                 bouteille = new Bouteille();
                 bouteille.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                 bouteille.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                bouteille.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
+                // on insere en memoire les vignettes en byte[] pour que la liste des bouteilles soit fluide (pas de transformation en bitmap à la volée)
+                //bouteille.setVignetteBitmap(Utils.getImageBytes(bouteille.getVignettePath(), myContext));
                 bouteille.setDomaine(cursor.getString(cursor.getColumnIndex(DOMAINE)));
                 if (cursor.getInt(cursor.getColumnIndex(MILLESIME)) > 0) {
                     bouteille.setMillesime(new Millesime(cursor.getInt(cursor.getColumnIndex(MILLESIME))));
@@ -434,11 +462,11 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
 
     public int supprimer(Bouteille bouteille){
         open();
-        // supprimer la photo sur le fs
-        String photoPath = bouteille.getPhotoPath();
         int ret = mDb.delete(TABLE_NAME, " "+KEY+"=?", new String[]{new Long(bouteille.getId()).toString()});
         if (ret>0){
-            deleteImageFromExternalStorage(photoPath);
+            // supprimer la photo sur le fs
+            deleteImageFromExternalStorage(bouteille.getPhotoPath());
+            deleteImageFromExternalStorage(bouteille.getVignettePath());
         }
         close();
         return ret;

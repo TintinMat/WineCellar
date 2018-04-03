@@ -63,7 +63,7 @@ public class StoragePermissions extends AppCompatActivity {
             }
         }
         //File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),folderName);
-        File folder = Utils.getPublicAlbumStorageDir(Utils.getApplicationName(this));
+        File folder = Utils.getPublicAlbumStorageDir(Utils.getApplicationFullName(this));
         int result = 0;
         if (folder.exists()) {
             Log.d("myAppName","folder exist:"+folder.toString());

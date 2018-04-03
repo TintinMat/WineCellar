@@ -15,6 +15,7 @@ public class Cave implements Serializable {
     private String nom;
     private int nbBouteillesTheoriques;
     private String photoPath = null;
+    private String vignettePath = null;
 
     public Cave() {
     }
@@ -53,6 +54,14 @@ public class Cave implements Serializable {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public String getVignettePath() {
+        return vignettePath;
+    }
+
+    public void setVignettePath(String vignettePath) {
+        this.vignettePath = vignettePath;
     }
 
     @Override

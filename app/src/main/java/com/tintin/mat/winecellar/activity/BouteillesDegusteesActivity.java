@@ -3,27 +3,20 @@ package com.tintin.mat.winecellar.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tintin.mat.winecellar.R;
-import com.tintin.mat.winecellar.adapter.BouteilleAdapter;
 import com.tintin.mat.winecellar.adapter.BouteillesDegusteesAdapter;
 import com.tintin.mat.winecellar.bo.Bouteille;
-import com.tintin.mat.winecellar.bo.Cave;
 import com.tintin.mat.winecellar.dao.BouteilleDao;
-import com.tintin.mat.winecellar.dao.CaveDao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Mat & Audrey on 18/10/2017.

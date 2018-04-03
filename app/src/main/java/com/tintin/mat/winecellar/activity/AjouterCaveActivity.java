@@ -95,7 +95,9 @@ public class AjouterCaveActivity extends StoragePermissions {
             CaveDao caveDao = new CaveDao(this, null);
             try{
                 // récupérer la photo
-                cave.setPhotoPath(imageUri.toString());
+                if (imageUri != null && imageUri.toString().length() > 0) {
+                    cave.setPhotoPath(imageUri.toString());
+                }
                 long idCave = caveDao.ajouter(cave);
                 cave.setId(idCave);
                 ClayetteDao clayetteDao = new ClayetteDao(this, null);

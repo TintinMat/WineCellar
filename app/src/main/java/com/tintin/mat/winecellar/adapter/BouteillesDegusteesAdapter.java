@@ -1,6 +1,8 @@
 package com.tintin.mat.winecellar.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,9 +82,10 @@ public class BouteillesDegusteesAdapter extends ArrayAdapter<Bouteille> {
             String messageDateDegustation = getContext().getString(R.string.text_view_row_date_degustation, "? - ? - ?");
             viewHolder.dateDegustation.setText(messageDateDegustation);
         }
-        if (bouteille.getPhotoPath() != null) {
+        if (bouteille.getVignettePath() != null && bouteille.getVignettePath().length()>0) {
             //get bitmap from the Uri
-            viewHolder.avatar.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), getContext()));
+            viewHolder.avatar.setImageBitmap(BitmapFactory.decodeFile(Uri.parse(bouteille.getVignettePath()).getPath()));
+            //viewHolder.avatar.setImageBitmap(Utils.getImage(bouteille.getVignetteBitmap()));
         }else{
             viewHolder.avatar.setImageResource(R.drawable.glasses1);
         }

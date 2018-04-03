@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -19,7 +19,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,7 +42,6 @@ import com.tintin.mat.winecellar.dao.CouleurDao;
 import com.tintin.mat.winecellar.dao.PaysDao;
 import com.tintin.mat.winecellar.dao.PetillantDao;
 import com.tintin.mat.winecellar.dao.RegionDao;
-import com.tintin.mat.winecellar.utils.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -82,6 +81,9 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
     private CouleurDao couleurDao = null;
     private PetillantDao petillantDao = null;
 
+    private long idCave;
+    private ProgressBar bar;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -97,6 +99,9 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
         if (getIntent().getExtras() != null && getIntent().getExtras().get("KeyClayette") != null) {
             clayette = (Clayette) getIntent().getExtras().get("KeyClayette");
         }
+        if (getIntent().getExtras().get("idCave") != null) {
+            idCave = (long)getIntent().getExtras().get("idCave");
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         prepareUI();
@@ -109,7 +114,7 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
                 finish();
                 return true;
             case R.id.create_bouteille:
-                ajouterBouteille();
+                creerBouteille();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -119,7 +124,53 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
     /* ============================================================================= */
     /* méthode principale d'ajout de la bouteille */
 
-    private void ajouterBouteille(){
+
+    private void creerBouteille(){
+        bar = (ProgressBar) this.findViewById(R.id.progressBar);
+        new ProgressTask().execute();
+    }
+
+    /* ============================================================================= */
+    /* méthode pour la progress bar */
+
+
+    private class ProgressTask extends AsyncTask<Void,Void,Void> {
+        private String seq = "";
+
+        @Override
+        protected void onPreExecute(){
+            bar.setVisibility(View.VISIBLE);
+
+            EditText nomDomaine = (EditText)findViewById(R.id.nomDomaineEditText);
+            if (nomDomaine == null || nomDomaine.getText().length()==0){
+                Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_nomDomaine, Toast.LENGTH_LONG);
+                toast.show();
+            } else if (clayetteChosen == null || clayetteChosen.toString() == null || clayetteChosen.toString().length()==0){
+                Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_clayette, Toast.LENGTH_LONG);
+                toast.show();
+            };
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            seq = ajouterBouteille();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            bar.setVisibility(View.GONE);
+            if (seq.length() >0) {
+                Toast toast = Toast.makeText(getApplicationContext(), seq, Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+            }
+        }
+    }
+
+
+
+    private String ajouterBouteille(){
         // récupérer les infos de l'ihm
         EditText nomDomaine = (EditText)findViewById(R.id.nomDomaineEditText);
         EditText prix = (EditText)findViewById(R.id.prixDachatEditText);
@@ -127,47 +178,64 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
         EditText comm = (EditText)findViewById(R.id.commentairesEditText);
         CheckBox bio = (CheckBox)findViewById(R.id.bioCheckBox);
 
-        if (nomDomaine == null || nomDomaine.getText().length()==0){
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_nomDomaine, Toast.LENGTH_LONG);
-            toast.show();
-        } else if (clayetteChosen == null || clayetteChosen.toString() == null || clayetteChosen.toString().length()==0){
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_clayette, Toast.LENGTH_LONG);
-            toast.show();
-        } else {
-            bouteilleDao = new BouteilleDao(this,null);
-            for (int i=0;i<qtyChosen;i++){
-                Bouteille b = new Bouteille();
-                b.setCommentaires(comm.getText().toString());
-                b.setDateDachat(dateDachatIntFormat);
-                b.setDomaine(nomDomaine.getText().toString());
-                b.setLieuDachat(lieu.getText().toString());
-                b.setMillesime(millesimeChosen);
-                if (prix.getText().length()>0) {
-                    b.setPrix(new Float(prix.getText().toString()));
-                }
-                b.setPetillant(petillantChosen);
-                //b.setAnneeDegustation();
-                b.setClayette(clayetteChosen);
-                b.setCouleur(couleurChosen);
-                b.setBio(bio.isChecked());
-                b.setAppellation(appellationChosen);
+        String seq = "";
+
+        bouteilleDao = new BouteilleDao(this,null);
+        int nbBoutOK = 0;
+        int nbBoutKO = 0;
+        for (int i=0;i<qtyChosen;i++){
+            Bouteille b = new Bouteille();
+            b.setCommentaires(comm.getText().toString());
+            b.setDateDachat(dateDachatIntFormat);
+            b.setDomaine(nomDomaine.getText().toString());
+            b.setLieuDachat(lieu.getText().toString());
+            b.setMillesime(millesimeChosen);
+            if (prix.getText().length()>0) {
+                b.setPrix(new Float(prix.getText().toString()));
+            }
+            b.setPetillant(petillantChosen);
+            //b.setAnneeDegustation();
+            b.setClayette(clayetteChosen);
+            b.setCouleur(couleurChosen);
+            b.setBio(bio.isChecked());
+            b.setAppellation(appellationChosen);
+            if (imageUri != null && imageUri.toString().length() > 0) {
                 b.setPhotoPath(imageUri.toString());
-                b.setApogeeMin(apogeeMinChosen);
-                b.setApogeeMax(apogeeMaxChosen);
-                try{
-                    bouteilleDao.ajouter(b);
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ok, Toast.LENGTH_LONG);
-                    toast.show();
-                    finish();
-                }catch (Exception ex) {
-                    if (BuildConfig.DEBUG){
-                        Log.e(TAG, "ajouterBouteille ", ex);
-                    }
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko, Toast.LENGTH_LONG);
-                    toast.show();
+            }
+            b.setApogeeMin(apogeeMinChosen);
+            b.setApogeeMax(apogeeMaxChosen);
+            try{
+                bouteilleDao.ajouter(b);
+                nbBoutOK++;
+                /*Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ok, Toast.LENGTH_LONG);
+                toast.show();
+                finish();*/
+            }catch (Exception ex) {
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "ajouterBouteille ", ex);
                 }
+                nbBoutKO++;
+                /*Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko, Toast.LENGTH_LONG);
+                toast.show();*/
             }
         }
+
+        if (nbBoutOK > 0){
+            if (nbBoutOK == 1){
+                seq += nbBoutOK +" bouteille ajoutée. ";
+            }else {
+                seq += nbBoutOK + " bouteilles ajoutées. ";
+            }
+        }
+        if (nbBoutKO > 0){
+            if (nbBoutKO == 1){
+                seq += nbBoutOK +" bouteille en erreur !";
+            }else {
+                seq += nbBoutOK + " bouteilles en erreur ! ";
+            }
+        }
+
+        return seq;
 
     }
 
@@ -305,10 +373,10 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
 
         // positionner la valeur
         try{
-            for(int i=0;i<adapter.getCount();i++){
-                if (clayette.getCave().getId() == adapter.getItem(i).getId()){
-                    spinnerCaves.setSelection(i);
-                    break;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (idCave == adapter.getItem(i).getId()) {
+                   spinnerCaves.setSelection(i);
+                   break;
                 }
             }
         }catch (NullPointerException npe){

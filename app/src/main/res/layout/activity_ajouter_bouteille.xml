@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.tintin.mat.winecellar.activity.AjouterBouteilleActivity"
+    >
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +17,8 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +26,8 @@
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="25dp">
+        android:layout_marginEnd="25dp"
+        >
 
         <TextView
             android:id="@+id/bouteillePhotoTextView"
@@ -407,8 +419,19 @@
             android:layout_marginStart="20dp"
             />
 
-
-
-
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:indeterminate="true"
+        >
+    </ProgressBar>
+
+    </RelativeLayout>

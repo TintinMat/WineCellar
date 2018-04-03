@@ -1,5 +1,7 @@
 package com.tintin.mat.winecellar.bo;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +29,8 @@ public class Bouteille implements Serializable {
 
     private Clayette clayette;
     private String photoPath = null;
+    private String vignettePath = null;
+    private byte[] vignetteBitmap = null;
 
     public long getId() {
         return id;
@@ -134,6 +138,21 @@ public class Bouteille implements Serializable {
 
     public String getPhotoPath() {
         return photoPath;
+    }
+    public String getVignettePath() {
+        return vignettePath;
+    }
+/*
+    public byte[] getVignetteBitmap() {
+        return vignetteBitmap;
+    }
+
+    public void setVignetteBitmap(byte[] vignetteBitmap) {
+        this.vignetteBitmap = vignetteBitmap;
+    }
+*/
+    public void setVignettePath(String vignettePath) {
+        this.vignettePath = vignettePath;
     }
 
     public void setPhotoPath(String photoPath) {

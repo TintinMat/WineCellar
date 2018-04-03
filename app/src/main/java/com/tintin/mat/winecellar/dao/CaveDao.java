@@ -11,6 +11,7 @@ import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.bo.Cave;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -26,12 +27,14 @@ public class CaveDao extends ManageExternalFileSystemDao {
     public static final String NBBOUTEILLES = "nb_bouteilles_theoriques";
     public static final String PHOTO = "photo";
     public static final String PHOTO_PATH = "photo_path";
+    public static final String VIGNETTE_PATH = "vignette_path";
 
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY, " + NOM + " TEXT, " +
-            NBBOUTEILLES + " INTEGER, " + PHOTO + " BLOB, " + PHOTO_PATH + " TEXT );";
+            NBBOUTEILLES + " INTEGER, " + PHOTO + " BLOB, " + VIGNETTE_PATH + " TEXT,  " + PHOTO_PATH + " TEXT );";
 
-    public static final String TABLE_UPDATE = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+    public static final String TABLE_UPDATE_V2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
+    public static final String TABLE_UPDATE_V3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + VIGNETTE_PATH + " TEXT ;";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -56,8 +59,11 @@ public class CaveDao extends ManageExternalFileSystemDao {
             values.put(NBBOUTEILLES, cave.getNbBouteillesTheoriques());
             if (cave.getPhotoPath() != null) {
                 // on insere la photo sur le disque
-                String pathImage = saveImageToExternalStorage(cave.getPhotoPath());
-                values.put(PHOTO_PATH, pathImage);
+                List<String> paths = saveImageToExternalStorage(cave.getPhotoPath());
+                if (paths != null && paths.size()>1) {
+                    values.put(PHOTO_PATH, paths.get(0));
+                    values.put(VIGNETTE_PATH, paths.get(1));
+                }
             }
 
             open();
@@ -82,6 +88,7 @@ public class CaveDao extends ManageExternalFileSystemDao {
                 cave = new Cave(cursor.getString(cursor.getColumnIndex(NOM)), cursor.getInt(cursor.getColumnIndex(NBBOUTEILLES)));
                 cave.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                 cave.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                cave.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
             }
             while (cursor.moveToNext());
         }
@@ -97,8 +104,9 @@ public class CaveDao extends ManageExternalFileSystemDao {
         if ( mDb.delete(ClayetteDao.TABLE_NAME, " "+ClayetteDao.FK_CAVE+"="+cave.getId(), null) != -1){
             ret_value = (mDb.delete(TABLE_NAME, " "+KEY+"="+cave.getId(), null) > 0) ;
             // supprimer la photo précédente
-            if (ret_value && cave.getPhotoPath() != null) {
+            if (ret_value) {
                 deleteImageFromExternalStorage(cave.getPhotoPath());
+                deleteImageFromExternalStorage(cave.getVignettePath());
             }
         }
         close();
@@ -116,10 +124,14 @@ public class CaveDao extends ManageExternalFileSystemDao {
         values.put(NBBOUTEILLES, cave.getNbBouteillesTheoriques());
         if (cave.getPhotoPath() != null) {
             // on insere la photo sur le disque
-            String pathImage = saveImageToExternalStorage(cave.getPhotoPath());
-            values.put(PHOTO_PATH, pathImage);
+            List<String> paths = saveImageToExternalStorage(cave.getPhotoPath());
+            if (paths != null && paths.size()>1) {
+                values.put(PHOTO_PATH, paths.get(0));
+                values.put(VIGNETTE_PATH, paths.get(1));
+            }
             // supprimer la photo sur le fs
             deleteImageFromExternalStorage(oldCave.getPhotoPath());
+            deleteImageFromExternalStorage(cave.getVignettePath());
         }
         open();
         ret_value = mDb.update(TABLE_NAME, values, KEY  + " = ?", new String[] {String.valueOf(cave.getId())});
@@ -145,6 +157,7 @@ public class CaveDao extends ManageExternalFileSystemDao {
                     Cave cave = new Cave(cursor.getString(cursor.getColumnIndex(NOM)), cursor.getInt(cursor.getColumnIndex(NBBOUTEILLES)));
                     cave.setId(cursor.getInt(cursor.getColumnIndex(KEY)));
                     cave.setPhotoPath(cursor.getString(cursor.getColumnIndex(PHOTO_PATH)));
+                    cave.setVignettePath(cursor.getString(cursor.getColumnIndex(VIGNETTE_PATH)));
                     listCaves.add(cave);
                 }
                 while (cursor.moveToNext());

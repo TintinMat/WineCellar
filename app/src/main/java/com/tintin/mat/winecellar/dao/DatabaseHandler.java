@@ -70,12 +70,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(PaysDao.TABLE_DROP);
 
         onCreate(db);*/
+        //on passe en v2 (ajout de colonnes)
         try {
-            db.execSQL(CaveDao.TABLE_UPDATE);
-            db.execSQL(BouteilleDao.TABLE_UPDATE);
+            db.execSQL(CaveDao.TABLE_UPDATE_V2);
+            db.execSQL(BouteilleDao.TABLE_UPDATE_V2);
         } catch (SQLiteException ex) {
             if (BuildConfig.DEBUG){
-                Log.e(TAG, "onUpgrade: ",ex );
+                Log.e(TAG, "onUpgrade v2: ",ex );
+            }
+        }
+        //on passe en v3 (ajout de colonnes)
+        try {
+            db.execSQL(CaveDao.TABLE_UPDATE_V3);
+            db.execSQL(BouteilleDao.TABLE_UPDATE_V3);
+        } catch (SQLiteException ex) {
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "onUpgrade v3: ",ex );
             }
         }
 
