@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.utils.Utils;
 
 import java.io.File;

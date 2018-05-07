@@ -6,36 +6,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
-import com.tintin.mat.winecellar.ResponseModels.InsertCaveResponseModel;
-import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.bo.Cave;
-import com.tintin.mat.winecellar.bo.Clayette;
-import com.tintin.mat.winecellar.dao.BouteilleDao;
 import com.tintin.mat.winecellar.dao.CaveDao;
-import com.tintin.mat.winecellar.dao.ClayetteDao;
-import com.tintin.mat.winecellar.utils.ApiClient;
-import com.tintin.mat.winecellar.utils.ApiService;
-import com.tintin.mat.winecellar.utils.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
@@ -88,9 +74,20 @@ public class ModifierCaveActivity extends StoragePermissions {
             case R.id.create_cave:
                 modifierCave();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
     /* ============================================================================= */

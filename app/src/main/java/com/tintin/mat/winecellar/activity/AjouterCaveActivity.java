@@ -1,17 +1,11 @@
 package com.tintin.mat.winecellar.activity;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,9 +23,7 @@ import com.tintin.mat.winecellar.dao.CaveDao;
 import com.tintin.mat.winecellar.dao.ClayetteDao;
 import com.tintin.mat.winecellar.utils.ApiClient;
 import com.tintin.mat.winecellar.utils.ApiService;
-import com.tintin.mat.winecellar.utils.Utils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,9 +72,19 @@ public class AjouterCaveActivity extends StoragePermissions {
             case R.id.create_cave:
                 ajouterCave();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void ajouterCave(){
         // récupérer les infos de l'ihm

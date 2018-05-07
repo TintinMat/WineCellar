@@ -1,5 +1,6 @@
 package com.tintin.mat.winecellar.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -155,9 +155,20 @@ public class OptionsActivity extends AppCompatActivity {
             case R.id.add_options:
                 ajouter_donnees();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
     private void ajouter_donnees(){
 

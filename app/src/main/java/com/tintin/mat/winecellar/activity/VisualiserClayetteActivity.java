@@ -100,9 +100,20 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
             case R.id.rechercher_bouteille :
                 //TODO
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
     private void ajouterBouteille(){
         Intent appel = new Intent(this, AjouterBouteilleActivity.class);

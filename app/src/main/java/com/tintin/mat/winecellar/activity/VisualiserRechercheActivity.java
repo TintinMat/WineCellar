@@ -19,7 +19,6 @@ import com.daimajia.swipe.util.Attributes;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.adapter.BouteilleSwipeAdapter;
 import com.tintin.mat.winecellar.bo.Bouteille;
-import com.tintin.mat.winecellar.bo.Clayette;
 import com.tintin.mat.winecellar.dao.BouteilleDao;
 import com.tintin.mat.winecellar.interfce.BouteilleInterface;
 
@@ -92,9 +91,20 @@ public class VisualiserRechercheActivity extends AppCompatActivity implements Bo
             case R.id.rechercher_bouteille :
                 //TODO
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
     private void afficherListeBouteilles(){

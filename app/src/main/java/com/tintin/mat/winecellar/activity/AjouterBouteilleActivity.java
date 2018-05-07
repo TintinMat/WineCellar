@@ -99,7 +99,7 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
         if (getIntent().getExtras() != null && getIntent().getExtras().get("KeyClayette") != null) {
             clayette = (Clayette) getIntent().getExtras().get("KeyClayette");
         }
-        if (getIntent().getExtras().get("idCave") != null) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().get("idCave") != null) {
             idCave = (long)getIntent().getExtras().get("idCave");
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -116,10 +116,18 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
             case R.id.create_bouteille:
                 creerBouteille();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void onBackHome() {
+        Intent intent=new Intent(AjouterBouteilleActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     /* ============================================================================= */
     /* méthode principale d'ajout de la bouteille */
@@ -633,8 +641,21 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
                                           int monthOfYear, int dayOfMonth) {
 
                         try {
-                            dateDachatEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            dateDachatIntFormat = new Integer("" + year + "" + (monthOfYear + 1) + "" + dayOfMonth);
+
+
+                            String monthString = ""+ (monthOfYear + 1);
+                            String dayString = ""+ dayOfMonth;
+                            if (monthOfYear + 1 <10 ){
+                                monthString = "0"+(monthOfYear+1);
+                            }
+                            if (dayOfMonth <10 ){
+                                dayString = "0"+dayOfMonth;
+                            }
+                            dateDachatIntFormat = new Integer("" + year + monthString + dayString);
+                            dateDachatEditText.setText(dayString + "-" + monthString + "-" + year);
+
+                            //dateDachatEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            //dateDachatIntFormat = new Integer("" + year + "" + (monthOfYear + 1) + "" + dayOfMonth);
                         }catch (NumberFormatException nfe){
                             dateDachatEditText.setText("");
                             dateDachatIntFormat = 0;

@@ -56,9 +56,20 @@ public class BouteillesDegusteesActivity extends AppCompatActivity {
             case R.id.rechercher_bouteille :
                 //TODO
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
     private void afficherBouteillesDegustees(){

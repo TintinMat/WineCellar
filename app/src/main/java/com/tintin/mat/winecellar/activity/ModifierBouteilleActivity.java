@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -19,7 +18,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -124,9 +122,20 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
             case R.id.del_bouteille:
                 supprimerBouteille();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
     /* ============================================================================= */
@@ -278,11 +287,12 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
         dateDegustationEditText.setOnClickListener(this);
         dateDegustationEditText.setOnFocusChangeListener(this);
 
+        dateDegustationIntFormat = bouteille.getAnneeDegustation();
         // les dates
-        if (bouteille.getAnneeDegustation()>0) {
+        if (dateDegustationIntFormat>0) {
             try {
                 // format de la date : dayOfMonth + "-" + (monthOfYear + 1) + "-" + year
-                String yop = "" + bouteille.getAnneeDegustation();
+                String yop = "" + dateDegustationIntFormat;
                 String yyear = yop.substring(0, 4);
                 String monthOfYear = yop.substring(4, 6);
                 String dayOfMonth = yop.substring(6, 8);
@@ -292,10 +302,11 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
                 dateDegustationEditText.setText("? - ? - ?");
             }
         }
-        if (bouteille.getDateDachat()>0) {
+        dateDachatIntFormat = bouteille.getDateDachat();
+        if (dateDachatIntFormat>0) {
             try {
                 // format de la date : dayOfMonth + "-" + (monthOfYear + 1) + "-" + year
-                String yop = ""+bouteille.getDateDachat();
+                String yop = ""+dateDachatIntFormat;
                 String yyear = yop.substring(0,4);
                 String monthOfYear = yop.substring(4,6);
                 String dayOfMonth = yop.substring(6,8);
@@ -736,8 +747,20 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
                                           int monthOfYear, int dayOfMonth) {
 
                         try {
-                            dateDachatEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            dateDachatIntFormat = new Integer("" + year + "" + (monthOfYear + 1) + "" + dayOfMonth);
+                            String monthString = ""+ (monthOfYear + 1);
+                            String dayString = ""+ dayOfMonth;
+
+                            if (monthOfYear + 1 <10 ){
+                                monthString = "0"+(monthOfYear+1);
+                            }
+                            if (dayOfMonth <10 ){
+                                dayString = "0"+dayOfMonth;
+                            }
+                            dateDachatIntFormat = new Integer("" + year + monthString + dayString);
+                            dateDachatEditText.setText(dayString + "-" + monthString + "-" + year);
+
+                            /*dateDachatEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            dateDachatIntFormat = new Integer("" + year + "" + (monthOfYear + 1) + "" + dayOfMonth);*/
                         }catch (NumberFormatException nfe){
                             dateDachatEditText.setText("");
                             dateDachatIntFormat = 0;
@@ -771,13 +794,13 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
                         try {
                             String monthString = ""+ (monthOfYear + 1);
                             String dayString = ""+ dayOfMonth;
-                            dateDegustationEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             if (monthOfYear + 1 <10 ){
                                 monthString = "0"+(monthOfYear+1);
                             }
                             if (dayOfMonth <10 ){
                                 dayString = "0"+dayOfMonth;
                             }
+                            dateDegustationEditText.setText(dayString + "-" + monthString + "-" + year);
                             dateDegustationIntFormat = new Integer("" + year + monthString + dayString);
                         }catch (NumberFormatException nfe){
                             dateDegustationEditText.setText("");

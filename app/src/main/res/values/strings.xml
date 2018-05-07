@@ -10,7 +10,7 @@
     <string name="navigation_drawer_map">Carte des vins</string>
     <string name="navigation_drawer_millesimes">Millésimes 2003-2017</string>
     <string name="navigation_drawer_config">Options</string>
-    <string name="navigation_header_title">WineCellar</string>
+    <string name="navigation_header_title">Cavavin</string>
     <string name="navigation_header_mail">mathieu.develop@gmail.com</string>
 
 
@@ -72,6 +72,7 @@
     <!-- menu options -->
     <string name="add_options">Ajouter les données</string>
 
+    <string name="back_home_page">Home Page</string>
     <!-- page recherche globale -->
     <string name="text_view_criteres_recherche"><u>Critères de recherche :</u></string>
     <string name="text_view_boire_dans_l_annee"><u>A boire dans l\'année</u></string>

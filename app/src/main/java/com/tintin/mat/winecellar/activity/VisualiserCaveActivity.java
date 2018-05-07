@@ -23,7 +23,6 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
-import com.tintin.mat.winecellar.adapter.ClayetteAdapter;
 import com.tintin.mat.winecellar.adapter.ClayetteSwipeAdapter;
 import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.bo.Cave;
@@ -99,9 +98,20 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
             case R.id.delete_cave:
                 deleteCave();
                 return true;
+            case R.id.back_home:
+                onBackHome();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackHome() {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
     private void ajouterBouteille(){
         Intent appel = new Intent(this, AjouterBouteilleActivity.class);

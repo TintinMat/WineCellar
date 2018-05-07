@@ -2,5 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/back_home"
+        android:icon="@drawable/ic_action_home"
+        android:title="@string/back_home_page"
+        android:tooltipText="@string/back_home_page"
+        app:showAsAction="always" />
 
 </menu>
