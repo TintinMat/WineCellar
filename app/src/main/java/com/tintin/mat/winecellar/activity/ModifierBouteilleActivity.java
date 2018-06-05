@@ -179,7 +179,14 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_bouteille_ok, Toast.LENGTH_LONG);
                 toast.show();
                 finish();
-            }catch (Exception ex){
+            }catch (OutOfMemoryError memoryError){
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "modifierBouteille ", memoryError);
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_bouteille_ko_memoire, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+            catch (Exception ex){
                 if (BuildConfig.DEBUG){
                     Log.e(TAG, "modifierBouteille ",ex );
                 }
@@ -653,8 +660,14 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
     private void afficherPhoto(){
         if (bouteille.getPhotoPath() != null && bouteille.getPhotoPath().toString().length() > 0) {
 
-            ImageButton imageCaveButton = (ImageButton)findViewById(R.id.bouteillePhotoImageButton);
-            imageCaveButton.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), this));
+            try {
+                ImageButton imageCaveButton = (ImageButton) findViewById(R.id.bouteillePhotoImageButton);
+                imageCaveButton.setImageBitmap(Utils.getImage(bouteille.getPhotoPath(), this));
+            }catch (OutOfMemoryError memoryError){
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "afficherPhoto ", memoryError);
+                }
+            }
         }
     }
 
@@ -688,10 +701,23 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "<onActivityResult> Error : " + e.getLocalizedMessage());
+                }
+                Toast.makeText(this, "Image non présente", Toast.LENGTH_LONG).show();
             } catch (IOException ioe) {
                 if (BuildConfig.DEBUG){
-                    Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                    Log.e(TAG, "<onActivityResult> Error : " + ioe.getLocalizedMessage());
+                }
+                Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
+            } catch (OutOfMemoryError memoryError){
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "<onActivityResult> Error : " + memoryError.getLocalizedMessage());
+                }
+                Toast.makeText(this, "Mémoire insuffisante - Impossible de sauver l'image", Toast.LENGTH_LONG).show();
+            } catch (SecurityException se) {
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "<onActivityResult> Error : " + se.getLocalizedMessage());
                 }
                 Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
             }

@@ -145,13 +145,26 @@ public class AjouterCaveActivity extends StoragePermissions {
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "<onActivityResult> Error : " + e.getLocalizedMessage());
+                }
+                Toast.makeText(this, "Image non présente", Toast.LENGTH_LONG).show();
             } catch (IOException ioe) {
                 if (BuildConfig.DEBUG){
-                    Log.e(TAG, "<saveImageInDB> Error : " + ioe.getLocalizedMessage());
+                    Log.e(TAG, "<onActivityResult> Error : " + ioe.getLocalizedMessage());
                 }
                 Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
+            } catch (OutOfMemoryError memoryError){
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "<onActivityResult> Error : " + memoryError.getLocalizedMessage());
+                }
+                Toast.makeText(this, "Mémoire insuffisante - Impossible de sauver l'image", Toast.LENGTH_LONG).show();
+            } catch (SecurityException se) {
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "<onActivityResult> Error : " + se.getLocalizedMessage());
             }
+            Toast.makeText(this, "Impossible de sauver l'image", Toast.LENGTH_LONG).show();
+        }
 
         }else {
             Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_LONG).show();

@@ -148,5 +148,57 @@
 
 
 
+    <TextView
+        android:id="@+id/InfosVersionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_infos_version"
+        android:textStyle="bold|italic"
+        app:layout_constraintLeft_toLeftOf="@id/AjouterDonneesTextView"
+        app:layout_constraintTop_toBottomOf="@id/loginConnexionEditText"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="0dp"
+        />
+
+    <TextView
+        android:id="@+id/versionNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_version_name"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/InfosVersionTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+    <TextView
+        android:id="@+id/versionNameTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dd"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/versionNameTextView"
+        app:layout_constraintRight_toRightOf="@+id/ajouterPaysAutoCompleteTextView"
+        />
+
+    <TextView
+        android:id="@+id/versionCodeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_version_code"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/versionNameTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysTextView"
+        />
+    <TextView
+        android:id="@+id/versionCodeTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dd"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/versionCodeTextView"
+        app:layout_constraintRight_toRightOf="@+id/ajouterPaysAutoCompleteTextView"
+        />
+
+
+
 
 </android.support.constraint.ConstraintLayout>

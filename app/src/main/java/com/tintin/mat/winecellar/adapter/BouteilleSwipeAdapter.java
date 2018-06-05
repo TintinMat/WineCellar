@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +23,17 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.bo.Bouteille;
 import com.tintin.mat.winecellar.interfce.BouteilleInterface;
-import com.tintin.mat.winecellar.utils.Utils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Mat & Audrey on 22/10/2017.
@@ -186,8 +189,13 @@ public class BouteilleSwipeAdapter extends BaseSwipeAdapter implements Filterabl
 
     public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemCache(key) == null) {
-            Bitmap o = mMemoryCache.put(key, bitmap);
-            //System.out.println("bonjour ");
+            try {
+                Bitmap o = mMemoryCache.put(key, bitmap);
+            }catch (NullPointerException e){
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "addBitmapToMemoryCache ", e);
+                }
+            }
         }
     }
 

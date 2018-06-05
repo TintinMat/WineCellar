@@ -63,6 +63,9 @@
     <string name="text_view_ajouter_appellation">Ajouter/Choisir Appellation</string>
     <string name="text_view_ajouter_donnnees"><u>Ajouter des Données</u></string>
     <string name="text_view_preferences_utilisateur"><u>Préférences Utilisateur (bientôt disponible)</u></string>
+    <string name="text_view_infos_version"><u>Informations sur la version</u></string>
+    <string name="text_view_version_name">Numéro de version</string>
+    <string name="text_view_version_code">Version du code</string>
     <string name="text_view_sauvegarde_cloud">Sauver les données dans le cloud</string>
     <string name="text_view_sauvegarde_photos">Importer les photos</string>
     <string name="text_view_login_connexion">Login de connexion</string>
@@ -143,6 +146,7 @@
     <string name="modif_bottle">Enregistrer</string>
     <string name="delete_bottle">Supprimer la bouteille</string>
     <string name="message_modifier_bouteille_ko">ERREUR dans la modification de la bouteille... Veuillez réessayer</string>
+    <string name="message_modifier_bouteille_ko_memoire">Mémoire insuffisante. Veuillez faire de la place sur le téléphone et réessayer</string>
     <string name="message_supprimer_bouteille_ko">ERREUR dans la suppression de la bouteille... Veuillez réessayer</string>
     <string name="message_modifier_bouteille_ok">bouteille modifiée</string>
     <string name="message_supprimer_bouteille_ok">bouteille supprimée</string>

@@ -1,9 +1,12 @@
 package com.tintin.mat.winecellar.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.bo.Appellation;
 import com.tintin.mat.winecellar.bo.Pays;
@@ -25,6 +30,8 @@ import com.tintin.mat.winecellar.dao.RegionDao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Mat & Audrey on 18/10/2017.
@@ -49,6 +56,19 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         setTitle(R.string.toolbar_options);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //mettre les versions code et name
+        TextView versionName = findViewById(R.id.versionNameTextView2);
+        TextView versionCode = findViewById(R.id.versionCodeTextView2);
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName.setText(pInfo.versionName);
+            versionCode.setText(""+pInfo.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            if (BuildConfig.DEBUG){
+                Log.e(TAG, "OptionsActivity.onCreate ",e );
+            }
+        }
 
 
         // pays

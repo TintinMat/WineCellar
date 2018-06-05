@@ -232,7 +232,14 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
                 /*Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ok, Toast.LENGTH_LONG);
                 toast.show();
                 finish();*/
-            }catch (Exception ex) {
+            }catch (OutOfMemoryError memoryError){
+                if (BuildConfig.DEBUG){
+                    Log.e(TAG, "ajouterBouteille ", memoryError);
+                    seq += "Mémoire insuffisante. ";
+                }
+                nbBoutKO++;
+            }
+            catch (Exception ex) {
                 if (BuildConfig.DEBUG){
                     Log.e(TAG, "ajouterBouteille ", ex);
                 }
