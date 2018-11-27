@@ -58,8 +58,8 @@ public class OptionsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //mettre les versions code et name
-        TextView versionName = findViewById(R.id.versionNameTextView2);
-        TextView versionCode = findViewById(R.id.versionCodeTextView2);
+        TextView versionName = (TextView)findViewById(R.id.versionNameTextView2);
+        TextView versionCode = (TextView)findViewById(R.id.versionCodeTextView2);
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             versionName.setText(pInfo.versionName);

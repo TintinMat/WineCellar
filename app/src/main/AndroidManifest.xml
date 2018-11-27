@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.tintin.mat.winecellar"
-    android:versionCode="2"
-    android:versionName="1.0.1">
+    package="com.tintin.mat.winecellar">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -64,6 +62,11 @@
             android:name=".activity.ModifierBouteilleActivity"
             android:label="@string/modif_bottle"
             android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+            android:name=".activity.AfficherBouteilleActivity"
+            android:label="@string/show_bottle"
+            >
         </activity>
         <activity
             android:name=".activity.BouteillesDegusteesActivity"

@@ -22,6 +22,7 @@
     <string name="toolbar_recherche_globale">Rechercher une bouteille</string>
     <string name="toolbar_bouteille_nouvelle">Ajouter une bouteille</string>
     <string name="toolbar_bouteille_modifier">Modifier la bouteille</string>
+    <string name="toolbar_bouteille_afficher">Informations</string>
     <string name="toolbar_bouteilles_degustees">Bouteilles Dégustées</string>
     <string name="toolbar_carte_vins">Carte des Vins de France</string>
     <string name="toolbar_millesimes_vins">Millésimes 2003-2017 des Vins de France</string>
@@ -160,5 +161,12 @@
     <string name="text_view_row_no_millesime">Millésime : %1$s</string>
     <string name="text_view_row_date_degustation">Date de dégustation : %1$s</string>
 
+    <!-- page afficher bouteille -->
+    <string name="show_bottle">Visualiser</string>
+    <string name="text_foo">foo</string>
+    <string name="to_modif_bottle">Modifier la bouteille</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -140,9 +140,10 @@ public class VisualiserRechercheActivity extends AppCompatActivity implements Bo
 
                     Bouteille b = (Bouteille) adapter.getItem(position);
 
-                    Intent intent = new Intent(VisualiserRechercheActivity.this, ModifierBouteilleActivity.class);
-                    //based on item add info to intent
+                    Intent intent = new Intent(VisualiserRechercheActivity.this, AfficherBouteilleActivity.class);
                     intent.putExtra("Key", (Serializable) b);
+                    intent.putExtra("position", position);
+                    intent.putExtra("listeBouteilles", (Serializable) listeBouteillesTrouvees);
                     startActivity(intent);
 
                 }

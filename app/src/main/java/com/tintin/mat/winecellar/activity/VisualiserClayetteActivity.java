@@ -127,7 +127,7 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
         // récupérer les bouteilles
         // il faut recharger les bouteilles depuis la bdd pcq si on a mis à jour les bouteilles...
         BouteilleDao bouteilleDao = new BouteilleDao(this,null);
-        ArrayList<Bouteille> listeBouteilles = bouteilleDao.getAllNotDegustedAssociatedWithClayette(clayette);
+        final ArrayList<Bouteille> listeBouteilles = bouteilleDao.getAllNotDegustedAssociatedWithClayette(clayette);
 
         listeViewBouteilles = (ListView)findViewById(R.id.listeBouteilles);
         TextView textBouteilleNb = (TextView) findViewById(R.id.textBouteilleNb);
@@ -155,9 +155,11 @@ public class VisualiserClayetteActivity extends AppCompatActivity implements Bou
 
                     Bouteille b = (Bouteille) adapter.getItem(position);
 
-                    Intent intent = new Intent(VisualiserClayetteActivity.this, ModifierBouteilleActivity.class);
+                    Intent intent = new Intent(VisualiserClayetteActivity.this, AfficherBouteilleActivity.class);
                     //based on item add info to intent
                     intent.putExtra("Key", (Serializable) b);
+                    intent.putExtra("position", position);
+                    intent.putExtra("listeBouteilles", (Serializable) listeBouteilles);
                     startActivity(intent);
 
                 }
