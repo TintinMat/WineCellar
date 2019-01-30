@@ -53,7 +53,7 @@ public class Clayette implements Serializable {
     }
 
     public String getNom() {
-        return nom;
+        return toString();
     }
 
     public void setNom(String nom) {

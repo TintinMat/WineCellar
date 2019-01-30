@@ -17,6 +17,8 @@ import com.tintin.mat.winecellar.dao.BouteilleDao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
@@ -92,6 +94,13 @@ public class AfficherBouteilleActivity extends AppCompatActivity {
                 intent.putExtra("Key", (Serializable) bouteille);
                 startActivity(intent);
                 return true;
+            case R.id.to_open_bouteille:
+                if (bouteilleDao == null){
+                    bouteilleDao = new BouteilleDao(this,null);
+                }
+                bouteille = bouteilleDao.getWithAllDependencies(listeBouteilles.get(viewPager.getCurrentItem()));
+                degusterBouteille(bouteille);
+                return true;
             case R.id.del_bouteille:
                 if (bouteilleDao == null){
                     bouteilleDao = new BouteilleDao(this,null);
@@ -165,6 +174,43 @@ public class AfficherBouteilleActivity extends AppCompatActivity {
     }
 
 
+
+    /* ============================================================================= */
+
+
+
+    /* ============================================================================= */
+    /* méthode pour supprimer la bouteille  */
+
+
+    public void degusterBouteille(Bouteille bouteille) {
+
+        Date today = new Date(); // Fri Jun 17 14:54:28 PDT 2016
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today); // don't forget this if date is arbitrary e.g. 01-01-2014
+        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH); // 17
+        int monthOfYear = cal.get(Calendar.MONTH); // 5
+        int year = cal.get(Calendar.YEAR); // 2016
+
+        String monthString = ""+ (monthOfYear + 1);
+        String dayString = ""+ dayOfMonth;
+        if (monthOfYear + 1 <10 ){
+            monthString = "0"+(monthOfYear+1);
+        }
+        if (dayOfMonth <10 ){
+            dayString = "0"+dayOfMonth;
+        }
+        int dateDegustationIntFormat = new Integer("" + year + monthString + dayString);
+
+        bouteille.setAnneeDegustation(dateDegustationIntFormat);
+        BouteilleDao bouteilleDao = new BouteilleDao(this,null);
+        bouteilleDao.modifierAnneeDegustation(bouteille);
+
+        Toast toast = Toast.makeText(getApplicationContext(), R.string.message_date_degustation_ok, Toast.LENGTH_LONG);
+        toast.show();
+
+        finish();
+    }
 
     /* ============================================================================= */
 }

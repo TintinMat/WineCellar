@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.tintin.mat.winecellar.BuildConfig;
 import com.tintin.mat.winecellar.R;
 import com.tintin.mat.winecellar.bo.Bouteille;
+import com.tintin.mat.winecellar.dao.BouteilleDao;
 import com.tintin.mat.winecellar.utils.Utils;
 
 import java.util.ArrayList;
@@ -30,12 +31,16 @@ public class BouteilleSlideAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater inflater;
+    private BouteilleDao bouteilleDao = null;
 
     private ArrayList<Bouteille> listeBouteilles = null;
 
     public BouteilleSlideAdapter(Context context, ArrayList<Bouteille> listeBouteilles){
         this.context = context;
         this.listeBouteilles = listeBouteilles;
+        if (bouteilleDao == null){
+            bouteilleDao = new BouteilleDao(this.context,null);
+        }
     }
 
     public void updateListeBouteilles(ArrayList<Bouteille> listeBouteilles){
@@ -92,7 +97,9 @@ public class BouteilleSlideAdapter extends PagerAdapter {
         CheckBox bio = (CheckBox)view.findViewById(R.id.bioCheckBox);
 
         if (listeBouteilles != null && position < listeBouteilles.size()) {
-            Bouteille bouteille = listeBouteilles.get(position);
+            // on recherche la bouteille avece tous les attributs pour l'afficher correctement
+            Bouteille bouteille = bouteilleDao.getWithAllDependencies(listeBouteilles.get(position));
+
 
             if (bouteille.getDomaine() != null) {
                 nomDomaine.setText(bouteille.getDomaine());

@@ -327,6 +327,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@+id/apogeeMinTextView"
+        android:layout_marginStart="10dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/apogeeMinTextView" />
 
     <TextView
@@ -335,7 +336,8 @@
         android:layout_height="wrap_content"
         android:text="@string/text_view_apogee_max"
         app:layout_constraintTop_toBottomOf="@+id/commentairesText"
-        app:layout_constraintLeft_toRightOf="@+id/apogeeMinText" />
+        app:layout_constraintLeft_toRightOf="@+id/apogeeMinText"
+        android:layout_marginStart="20dp"/>
 
     <TextView
         android:text="@string/text_foo"
@@ -343,6 +345,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@+id/apogeeMaxTextView"
+        android:layout_marginStart="10dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/apogeeMaxTextView" />
 
 </android.support.constraint.ConstraintLayout>

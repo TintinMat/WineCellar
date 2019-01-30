@@ -3,13 +3,14 @@ package com.tintin.mat.winecellar.bo;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Created by Mat & Audrey on 16/10/2017.
  */
 
-public class Bouteille implements Serializable {
+public class Bouteille implements Serializable, Comparable<Bouteille> {
 
     private long id;
     private String domaine;
@@ -174,4 +175,10 @@ public class Bouteille implements Serializable {
     public void setApogeeMax(int apogeeMax) {
         this.apogeeMax = apogeeMax;
     }
+
+    @Override
+    public int compareTo(Bouteille b) {
+        return this.anneeDegustation > b.anneeDegustation ? -1 : 1;
+    }
+
 }

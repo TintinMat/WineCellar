@@ -124,8 +124,8 @@
     <string name="text_view_region">Région</string>
     <string name="text_view_appellation">Appellation</string>
     <string name="text_view_millesime">Millésime</string>
-    <string name="text_view_apogee_min">Apogee min</string>
-    <string name="text_view_apogee_max">Max</string>
+    <string name="text_view_apogee_min">Apogées : min</string>
+    <string name="text_view_apogee_max">max</string>
     <string name="text_view_couleur">Couleur</string>
     <string name="text_view_petillant">Petillant</string>
     <string name="text_view_prix">Prix (€)</string>
@@ -165,6 +165,7 @@
     <string name="show_bottle">Visualiser</string>
     <string name="text_foo">foo</string>
     <string name="to_modif_bottle">Modifier la bouteille</string>
+    <string name="message_date_degustation_ok">Bouteille bue :-)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

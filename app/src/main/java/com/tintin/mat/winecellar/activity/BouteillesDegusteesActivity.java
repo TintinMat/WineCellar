@@ -17,6 +17,9 @@ import com.tintin.mat.winecellar.dao.BouteilleDao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static java.util.Collections.sort;
 
 /**
  * Created by Mat & Audrey on 18/10/2017.
@@ -76,7 +79,7 @@ public class BouteillesDegusteesActivity extends AppCompatActivity {
 
         // récupérer les bouteilles
         bouteilleDao = new BouteilleDao(this,null);
-        ArrayList<Bouteille> listeBouteilles = bouteilleDao.getAllDegusted();
+        final ArrayList<Bouteille> listeBouteilles = bouteilleDao.getAllDegusted();
 
         ListView listeViewBouteilles = (ListView)findViewById(R.id.listeBouteilles);
         TextView textBouteilleNb = (TextView) findViewById(R.id.textBouteilleNb);
@@ -86,6 +89,8 @@ public class BouteillesDegusteesActivity extends AppCompatActivity {
             textBouteilleNb.setVisibility(View.VISIBLE);
             listeViewBouteilles.setVisibility(View.INVISIBLE);
         }else {
+            // on trie la liste
+            Collections.sort(listeBouteilles);
             // la listView pour afficher les différentes caves
             BouteillesDegusteesAdapter adapter = new BouteillesDegusteesAdapter(BouteillesDegusteesActivity.this, listeBouteilles);
             listeViewBouteilles.setAdapter(adapter);
@@ -96,10 +101,13 @@ public class BouteillesDegusteesActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
                     Bouteille b = (Bouteille) adapter.getItemAtPosition(position);
 
-                    Intent intent = new Intent(BouteillesDegusteesActivity.this, ModifierBouteilleActivity.class);
+                    Intent intent = new Intent(BouteillesDegusteesActivity.this, AfficherBouteilleDegusteeActivity.class);
                     //based on item add info to intent
                     intent.putExtra("Key", (Serializable) b);
+                    intent.putExtra("position", position);
+                    intent.putExtra("listeBouteilles", (Serializable) listeBouteilles);
                     startActivity(intent);
+
                 }
             });
 
