@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_view_generalites"
         android:textStyle="bold|italic"
-        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="250dp"/>
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_view_domaine"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generalitesTextView"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"/>

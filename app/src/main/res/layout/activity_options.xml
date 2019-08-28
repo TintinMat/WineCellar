@@ -15,20 +15,18 @@
         android:id="@+id/AjouterDonneesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/text_view_ajouter_donnnees"
         android:textStyle="bold|italic"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="0dp"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ajouterPaysTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_view_ajouter_pays"
-        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AjouterDonneesTextView"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
@@ -58,9 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/ajouterRegionTextView"
-        />
+        app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView" />
 
     <TextView
         android:id="@+id/ajouterAppellationTextView"
@@ -89,7 +86,7 @@
         app:layout_constraintLeft_toLeftOf="@id/AjouterDonneesTextView"
         app:layout_constraintTop_toBottomOf="@id/ajouterAppellationTextView"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         />
 
     <TextView
@@ -144,7 +141,8 @@
         android:inputType="text"
         android:text=""
         app:layout_constraintLeft_toLeftOf="@+id/ajouterPaysAutoCompleteTextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/loginConnexionTextView" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/loginConnexionTextView"
+        android:importantForAutofill="no" />
 
 
 
@@ -157,7 +155,7 @@
         app:layout_constraintLeft_toLeftOf="@id/AjouterDonneesTextView"
         app:layout_constraintTop_toBottomOf="@id/loginConnexionEditText"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         />
 
     <TextView

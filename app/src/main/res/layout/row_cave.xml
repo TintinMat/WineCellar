@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/avatar"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/avatar"
         android:layout_alignTop="@+id/avatar"
         android:textStyle="bold"
         tools:text="nomCave" />
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/nomCaveRowTextView"
+        android:layout_alignStart="@+id/nomCaveRowTextView"
         android:layout_below="@+id/nomCaveRowTextView"
         tools:text="nbBouteilles" />
 

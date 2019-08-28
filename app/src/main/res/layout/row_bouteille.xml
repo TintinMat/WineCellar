@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/avatarBouteille"
-            android:layout_toRightOf="@+id/avatarBouteille"
+            android:layout_toEndOf="@+id/avatarBouteille"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:layout_below="@+id/nomDomaineRowTextView"
-            android:layout_alignLeft="@+id/nomDomaineRowTextView"
+            android:layout_alignStart="@+id/nomDomaineRowTextView"
             tools:text="@string/text_view_appellation"
             android:layout_marginTop="5dp"/>
 
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:layout_below="@+id/nomAppellationRowTextView"
-            android:layout_alignLeft="@+id/nomDomaineRowTextView"
+            android:layout_alignStart="@+id/nomDomaineRowTextView"
             tools:text="@string/text_view_millesime"
             android:layout_marginTop="5dp"/>
 
