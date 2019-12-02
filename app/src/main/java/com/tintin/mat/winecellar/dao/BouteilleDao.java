@@ -45,11 +45,13 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
     public static final String APOGEEMAX = "apogeeMax";
     public static final String FK_CLAYETTE = "clayette_id";
     public static final String FK_APPELLATION = "appellation_id";
+    public static final String RATING = "rating";
 
 
     public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + " (" + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DOMAINE + " TEXT, " + MILLESIME + " INTEGER, " +
             COULEUR + " INTEGER, " + PETILLANT + " INTEGER, " + PRIX + " REAL, " + LIEUDACHAT + " TEXT, " + DATEDACHAT + " INTEGER, " +  ANNEEDEGUSTATION + " INTEGER, " +
-            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + PHOTO_PATH + " TEXT,  " + VIGNETTE_PATH + " TEXT,  "+ APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " +
+            BIO + " INTEGER, " + COMMENTAIRES + " TEXT, " + PHOTO + " BLOB,  " + PHOTO_PATH + " TEXT,  " + VIGNETTE_PATH + " TEXT,  "+
+            APOGEEMIN + " INTEGER, " + APOGEEMAX + " INTEGER, " + RATING + " REAL, " +
             FK_CLAYETTE + " INTEGER, " + FK_APPELLATION + " INTEGER, " +
             "FOREIGN KEY("+ FK_CLAYETTE +") REFERENCES "+ ClayetteDao.TABLE_NAME +"("+ ClayetteDao.KEY +")" +
             "FOREIGN KEY("+ FK_APPELLATION +") REFERENCES "+ AppellationDao.TABLE_NAME +"("+ AppellationDao.KEY +")" +
@@ -57,6 +59,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
 
     public static final String TABLE_UPDATE_V2 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + PHOTO_PATH + " TEXT ;";
     public static final String TABLE_UPDATE_V3 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + VIGNETTE_PATH + " TEXT ;";
+    public static final String TABLE_UPDATE_V6 = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + RATING + " REAL ;";
 
     public static final String TABLE_DROP =  "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -118,6 +121,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         values.put(ANNEEDEGUSTATION, bouteille.getAnneeDegustation());
         values.put(DATEDACHAT, bouteille.getDateDachat());
         values.put(FK_APPELLATION, bouteille.getAppellation().getId());
+        values.put(RATING, bouteille.getRating());
         open();
         ret_value = mDb.insert(TABLE_NAME, null, values);
         close();
@@ -182,6 +186,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         values.put(ANNEEDEGUSTATION, bouteille.getAnneeDegustation());
         values.put(DATEDACHAT, bouteille.getDateDachat());
         values.put(FK_APPELLATION, bouteille.getAppellation().getId());
+        values.put(RATING, bouteille.getRating());
 
         ret_value = mDb.update(TABLE_NAME, values, KEY  + " = ?", new String[] {String.valueOf(bouteille.getId())});
         close();
@@ -408,6 +413,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             pe.setNom(Petillant.getNom(pe.getId()));
             bouteille.setPetillant(pe);
             bouteille.setPrix(cursor.getFloat(cursor.getColumnIndex(PRIX)));
+            bouteille.setRating(cursor.getFloat(cursor.getColumnIndex(RATING)));
 
         }else {
             // la cave n'existe plus, on refait la requete sans la cave
@@ -454,6 +460,7 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                 pe.setNom(Petillant.getNom(pe.getId()));
                 bouteille.setPetillant(pe);
                 bouteille.setPrix(cursor.getFloat(cursor.getColumnIndex(PRIX)));
+                bouteille.setRating(cursor.getFloat(cursor.getColumnIndex(RATING)));
             }
         }
         cursor.close();

@@ -24,6 +24,7 @@ import com.tintin.mat.winecellar.bo.Pays;
 import com.tintin.mat.winecellar.bo.Preferences;
 import com.tintin.mat.winecellar.bo.Region;
 import com.tintin.mat.winecellar.dao.AppellationDao;
+import com.tintin.mat.winecellar.dao.DAOBase;
 import com.tintin.mat.winecellar.dao.PaysDao;
 import com.tintin.mat.winecellar.dao.PreferencesDao;
 import com.tintin.mat.winecellar.dao.RegionDao;
@@ -60,13 +61,21 @@ public class OptionsActivity extends AppCompatActivity {
         //mettre les versions code et name
         TextView versionName = (TextView)findViewById(R.id.versionNameTextView2);
         TextView versionCode = (TextView)findViewById(R.id.versionCodeTextView2);
+        TextView versionBase = (TextView)findViewById(R.id.versionBaseTextView2);
+
+        PackageInfo pInfo = null;
         try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             versionName.setText(pInfo.versionName);
-            versionCode.setText(""+pInfo.versionCode);
+            versionBase.setText(String.valueOf(DAOBase.VERSION));
+            versionCode.setText(String.valueOf(pInfo.getLongVersionCode()));
         } catch (PackageManager.NameNotFoundException e) {
             if (BuildConfig.DEBUG){
                 Log.e(TAG, "OptionsActivity.onCreate ",e );
+            }
+        } catch (NoSuchMethodError err){
+            if (pInfo != null){
+                versionCode.setText(String.valueOf(pInfo.versionCode));
             }
         }
 

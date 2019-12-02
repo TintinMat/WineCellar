@@ -30,7 +30,9 @@
         android:padding="5dp"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
     <TextView
@@ -347,6 +349,15 @@
         app:layout_constraintLeft_toRightOf="@+id/apogeeMaxTextView"
         android:layout_marginStart="10dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/apogeeMaxTextView" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/apogeeMaxText"
+        app:layout_constraintLeft_toLeftOf="@+id/nomDomaineTextView"
+        android:layout_marginTop="10dp"
+        />
 
 </android.support.constraint.ConstraintLayout>
     </ScrollView>

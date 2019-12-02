@@ -2,7 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        // récupérer le fichier build.gradle sur onedrive
+        config {
+            keyAlias 'clesMesApp'
+            keyPassword '2013mesApp2015'
+            storeFile file('D:/Android/cles/androidAppKey.jks')
+            storePassword '18MaCleKo2012'
+        }
     }
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false

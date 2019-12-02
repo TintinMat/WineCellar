@@ -315,7 +315,9 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
 
     private void ajouterClayette(){
         ClayetteDao clayetteDao = new ClayetteDao(this, null);
-        clayetteDao.ajouter(new Clayette(cave));
+        // compter le nombre de clayettes de la cave
+        int nbClayettes = clayetteDao.getFromCave(cave).size();
+        clayetteDao.ajouter(new Clayette(cave, nbClayettes));
         onResume();
     }
 }

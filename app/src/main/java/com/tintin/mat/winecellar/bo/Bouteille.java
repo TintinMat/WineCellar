@@ -33,6 +33,9 @@ public class Bouteille implements Serializable, Comparable<Bouteille> {
     private String vignettePath = null;
     private byte[] vignetteBitmap = null;
 
+    private float rating;
+
+
     public long getId() {
         return id;
     }
@@ -175,6 +178,10 @@ public class Bouteille implements Serializable, Comparable<Bouteille> {
     public void setApogeeMax(int apogeeMax) {
         this.apogeeMax = apogeeMax;
     }
+
+    public float getRating(){ return rating;}
+
+    public void setRating(float rating){ this.rating = rating; }
 
     @Override
     public int compareTo(Bouteille b) {

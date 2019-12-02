@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -72,6 +73,8 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
     private Petillant petillantChosen = null;
     private Integer apogeeMinChosen = 0;
     private Integer apogeeMaxChosen = 0;
+
+    private RatingBar ratingBar;
 
     private PaysDao paysDao = null;
     private RegionDao regionDao = null;
@@ -148,6 +151,7 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
         EditText lieu = (EditText)findViewById(R.id.lieuDachatEditText);
         EditText comm = (EditText)findViewById(R.id.commentairesEditText);
         CheckBox bio = (CheckBox)findViewById(R.id.bioCheckBox);
+        RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
 
         if (nomDomaine == null || nomDomaine.getText().length()==0){
             Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_bouteille_ko_nomDomaine, Toast.LENGTH_LONG);
@@ -174,6 +178,7 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
             }
             bouteille.setApogeeMin(apogeeMinChosen);
             bouteille.setApogeeMax(apogeeMaxChosen);
+            bouteille.setRating(ratingBar.getRating());
             try{
                 bouteilleDao.modifier(bouteille);
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_modifier_bouteille_ok, Toast.LENGTH_LONG);
@@ -205,7 +210,7 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
 
 
     /* ============================================================================= */
-    /* méthode principale pour afficher les données  */
+    /* méthode pour supprmer les données  */
 
     public void supprimerBouteille(){
         try{
@@ -323,6 +328,9 @@ public class ModifierBouteilleActivity extends StoragePermissions implements Vie
                 dateDachatEditText.setText("? - ? - ?");
             }
         }
+
+        ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        ratingBar.setRating(bouteille.getRating());
 
         //charger la photo
         afficherPhoto();

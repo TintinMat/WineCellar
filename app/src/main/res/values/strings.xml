@@ -67,6 +67,7 @@
     <string name="text_view_infos_version"><u>Informations sur la version</u></string>
     <string name="text_view_version_name">Numéro de version</string>
     <string name="text_view_version_code">Version du code</string>
+    <string name="text_view_base_code">Version de la base</string>
     <string name="text_view_sauvegarde_cloud">Sauver les données dans le cloud</string>
     <string name="text_view_sauvegarde_photos">Importer les photos</string>
     <string name="text_view_login_connexion">Login de connexion</string>

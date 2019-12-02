@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -95,6 +96,7 @@ public class BouteilleSlideAdapter extends PagerAdapter {
         TextView lieu = (TextView)view.findViewById(R.id.lieuDachatText);
         EditText comm = (EditText)view.findViewById(R.id.commentairesText);
         CheckBox bio = (CheckBox)view.findViewById(R.id.bioCheckBox);
+        RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar);
 
         if (listeBouteilles != null && position < listeBouteilles.size()) {
             // on recherche la bouteille avece tous les attributs pour l'afficher correctement
@@ -211,6 +213,7 @@ public class BouteilleSlideAdapter extends PagerAdapter {
                 dateDachatEditText.setText("");
             }
 
+            ratingBar.setRating(bouteille.getRating());
 
             //charger la photo
             afficherPhoto(view, bouteille);

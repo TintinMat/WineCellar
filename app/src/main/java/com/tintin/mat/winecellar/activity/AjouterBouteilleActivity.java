@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -199,6 +200,7 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
         EditText lieu = (EditText)findViewById(R.id.lieuDachatEditText);
         EditText comm = (EditText)findViewById(R.id.commentairesEditText);
         CheckBox bio = (CheckBox)findViewById(R.id.bioCheckBox);
+        RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
 
         String seq = "";
 
@@ -226,6 +228,7 @@ public class AjouterBouteilleActivity extends StoragePermissions implements View
             }
             b.setApogeeMin(apogeeMinChosen);
             b.setApogeeMax(apogeeMaxChosen);
+            b.setRating(ratingBar.getRating());
             try{
                 bouteilleDao.ajouter(b);
                 nbBoutOK++;

@@ -34,6 +34,12 @@ public class Clayette implements Serializable {
     public Clayette(){
     }
 
+    public Clayette(Cave cave, int id) {
+        this.nom = "";
+        this.cave = cave;
+        this.id = new Integer(id).longValue();
+    }
+
     public Clayette(Cave cave) {
         this.nom = "";
         this.cave = cave;

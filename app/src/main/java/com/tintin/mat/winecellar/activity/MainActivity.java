@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         paysDao = new PaysDao(this, mHandler);
         caveDao = new CaveDao(this, mHandler);
 
-        if (mHandler.getMode() == DatabaseHandler.ON_CREATE || mHandler.getMode() == DatabaseHandler.ON_UPDATE){
+        if (mHandler.getMode() == DatabaseHandler.ON_CREATE /*|| mHandler.getMode() == DatabaseHandler.ON_UPDATE*/){
+            // ne pas remplir la bdd si on est en update vu qu'on ne vide plus la table
             populateBdd();
         }
         resetPreferences();

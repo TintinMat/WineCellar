@@ -104,7 +104,7 @@ public class AjouterCaveActivity extends StoragePermissions {
                 cave.setId(idCave);
                 ClayetteDao clayetteDao = new ClayetteDao(this, null);
                 for (int i=0;i<new Integer(nbClayettesCave.getText().toString());i++){
-                    clayetteDao.ajouter(new Clayette(cave));
+                    clayetteDao.ajouter(new Clayette(cave, i));
                 }
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.message_creation_cave_ok, Toast.LENGTH_LONG);
                 toast.show();
