@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WineCellar.iml" filepath="$PROJECT_DIR$/WineCellar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WineCellar.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WineCellar.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/WineCellar.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/WineCellar.library.iml" />
     </modules>
   </component>
 </project>

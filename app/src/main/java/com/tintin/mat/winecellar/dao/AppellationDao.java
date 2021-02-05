@@ -85,8 +85,9 @@ public class AppellationDao extends DAOBase {
     public ArrayList<Appellation> getByName(String name){
         ArrayList<Appellation> listAppellations = new ArrayList<Appellation>();
         open();
-        String whereClause = " WHERE LOWER("+TABLE_NAME+"."+NOM+")='"+name.toLowerCase()+"'";
-        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, null);
+        String whereClause = " WHERE LOWER("+TABLE_NAME+"."+NOM+")= ?";
+        String[] whereParams = new String[]{name.toLowerCase()};
+        Cursor cursor = mDb.rawQuery( "SELECT * FROM " + TABLE_NAME + whereClause, whereParams);
         if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
             do {
                 Appellation appellation = new Appellation();
