@@ -3,6 +3,8 @@ package com.tintin.mat.winecellar.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.tintin.mat.winecellar.bo.Cave;
+
 /**
  * Created by Mat & Audrey on 15/10/2017.
  */
@@ -46,7 +48,6 @@ public abstract class DAOBase {
     public SQLiteDatabase getDb() {
         return mDb;
     }
-
 
 }
 

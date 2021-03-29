@@ -331,7 +331,7 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
     }
 
     private void infosCave(){
-        Intent intent=new Intent(this,InfosCaveActivity.class);
+        Intent intent=new Intent(this, StatsCaveActivity.class);
         intent.putExtra("Key", (Serializable) cave);
         startActivity(intent);
     }

@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class InfosCaveActivity extends AppCompatActivity {
+public class StatsCaveActivity extends AppCompatActivity {
 
     private Cave cave;
 
@@ -66,7 +66,7 @@ public class InfosCaveActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infos_cave);
+        setContentView(R.layout.activity_stats_cave);
         setTitle(R.string.toolbar_infos_cave);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -78,6 +78,8 @@ public class InfosCaveActivity extends AppCompatActivity {
 
         afficherPie();
         afficherMenu(textViewNb, textViewPct);
+
+        afficherValeurCave();
 
     }
 
@@ -276,6 +278,20 @@ public class InfosCaveActivity extends AppCompatActivity {
         String t = textViewToUnspan.getText().toString();
         textViewToUnspan.setText(t) ;
     }
+
+    private void afficherValeurCave(){
+        //
+        TextView textViewValueCave  = findViewById(R.id.textCellarValue) ;
+
+        if (bouteilleDao == null){
+            bouteilleDao = new BouteilleDao(this, null);
+        }
+
+        float value = bouteilleDao.getValueOfCave(cave);
+        textViewValueCave.setText(getString(R.string.stats_cellar_value, value));
+
+    }
+
 
     private static class pieChartOnChartValueSelectedListener implements OnChartValueSelectedListener {
 

@@ -239,6 +239,37 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         return cnt;
     }
 
+
+    public float getValueOfCave(Cave cave){
+
+        float val = 0;
+        open();
+
+        String selectClause = "SELECT "+TABLE_NAME+"."+PRIX;
+
+        String fromClause = " FROM " + TABLE_NAME+", "+ ClayetteDao.TABLE_NAME;
+
+        String whereClause = " WHERE "+TABLE_NAME+"."+FK_CLAYETTE+"="+ClayetteDao.TABLE_NAME+"."+ClayetteDao.KEY +
+                " AND "+ClayetteDao.TABLE_NAME+"."+ClayetteDao.FK_CAVE+"="+cave.getId() ;
+
+        Cursor cursor = mDb.rawQuery(selectClause + fromClause + whereClause, null);
+
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
+            do {
+                val += cursor.getFloat(cursor.getColumnIndex(PRIX));
+            }
+            while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        close();
+        return val;
+
+    }
+
     public ArrayList<Bouteille> getAllNotDegustedAssociatedWithCave(Cave cave){
         ArrayList<Bouteille> listeBouteilles = new ArrayList<Bouteille>();
         open();
@@ -268,7 +299,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             }
             while (cursor.moveToNext());
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         close();
         return listeBouteilles;
     }
@@ -303,7 +336,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             }
             while (cursor.moveToNext());
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         close();
         return listeBouteilles;
     }
@@ -337,7 +372,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             }
             while (cursor.moveToNext());
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         close();
         return listeBouteilles;
     }
@@ -489,7 +526,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
                 bouteille.setRating(cursor.getFloat(cursor.getColumnIndex(RATING)));
             }
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         return bouteille;
     }
 
@@ -561,7 +600,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             }
             while (cursor.moveToNext());
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         close();
         return listeBouteilles;
 
@@ -589,7 +630,9 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
             }
             while (cursor.moveToNext());
         }
-        cursor.close();
+        if (cursor != null) {
+            cursor.close();
+        }
         close();
         return listeBouteilles;
     }
