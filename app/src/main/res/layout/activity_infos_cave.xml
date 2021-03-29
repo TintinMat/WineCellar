@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tintin.mat.winecellar.activity.InfosCaveActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/scrollViewStats">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textBouteilleNb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/statsNb"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="35dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="onClickTextBouteilleNb"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/textBouteillePct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statsPct"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="35dp"
+            app:layout_constraintTop_toTopOf="@id/textBouteilleNb"
+            android:onClick="onClickTextBouteillePct"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartInCellar_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/textBouteilleNb" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartDeg_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/pieChartInCellar_view" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

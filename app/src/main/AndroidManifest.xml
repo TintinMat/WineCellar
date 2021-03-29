@@ -40,6 +40,10 @@
             android:label="@string/content_cellar">
         </activity>
         <activity
+            android:name=".activity.InfosCaveActivity"
+            android:label="@string/content_cellar">
+        </activity>
+        <activity
             android:name=".activity.VisualiserClayetteActivity"
             android:label="@string/content_cellar">
             <meta-data

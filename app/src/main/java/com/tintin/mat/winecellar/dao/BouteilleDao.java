@@ -213,6 +213,32 @@ public class BouteilleDao extends ManageExternalFileSystemDao {
         return cnt;
     }
 
+    public long nbBouteillesByColorAssociatedWithCave(Cave cave, Couleur couleur, boolean findDegustedBottles){
+        long cnt = 0;
+        open();
+
+        String selectClause = "SELECT "+TABLE_NAME+"."+KEY;
+
+        String fromClause = " FROM " + TABLE_NAME+", "+ ClayetteDao.TABLE_NAME;
+
+        String whereClause = " WHERE "+TABLE_NAME+"."+FK_CLAYETTE+"="+ClayetteDao.TABLE_NAME+"."+ClayetteDao.KEY +
+                " AND "+ClayetteDao.TABLE_NAME+"."+ClayetteDao.FK_CAVE+"="+cave.getId() +
+                " AND "+ COULEUR + " = ? AND " + ANNEEDEGUSTATION ;
+        // si on cherche que les bouteilles bues
+        if (findDegustedBottles){
+            whereClause +=  " > 0 ";
+        } else { // sinon, les bouteilles pas encore bues
+            whereClause += " = 0 ";
+        }
+
+        Cursor cursor = mDb. rawQuery(selectClause + fromClause + whereClause, new String[] {String.valueOf(couleur.getId())});
+
+        cnt  = cursor.getCount();
+        cursor.close();
+        close();
+        return cnt;
+    }
+
     public ArrayList<Bouteille> getAllNotDegustedAssociatedWithCave(Cave cave){
         ArrayList<Bouteille> listeBouteilles = new ArrayList<Bouteille>();
         open();

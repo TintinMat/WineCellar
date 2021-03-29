@@ -64,13 +64,22 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
         setTitle(cave.getNom());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_clayette);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAddClayette = (FloatingActionButton) findViewById(R.id.fab_add_clayette);
+        fabAddClayette.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ajouterClayette();
             }
         });
+
+        FloatingActionButton fabInfosCave = (FloatingActionButton) findViewById(R.id.fab_infos_cave);
+        fabInfosCave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                infosCave();
+            }
+        });
+
     }
 
     @Override
@@ -319,5 +328,11 @@ public class VisualiserCaveActivity extends AppCompatActivity implements Clayett
         int nbClayettes = clayetteDao.getFromCave(cave).size();
         clayetteDao.ajouter(new Clayette(cave, nbClayettes));
         onResume();
+    }
+
+    private void infosCave(){
+        Intent intent=new Intent(this,InfosCaveActivity.class);
+        intent.putExtra("Key", (Serializable) cave);
+        startActivity(intent);
     }
 }

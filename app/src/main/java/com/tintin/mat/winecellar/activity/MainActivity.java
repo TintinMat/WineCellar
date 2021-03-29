@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         startActivity(intent);
                     }catch(Exception e){
                         if (BuildConfig.DEBUG){
-                            Log.e(TAG, "isteViewCaves.setOnItemClickListener ",e );
+                            Log.e(TAG, "listeViewCaves.setOnItemClickListener ",e );
                         }
                     }
                 }

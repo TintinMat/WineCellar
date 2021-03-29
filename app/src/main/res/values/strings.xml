@@ -20,6 +20,7 @@
     <string name="toolbar_cave_nouvelle">Nouvelle cave</string>
     <string name="toolbar_options">Options</string>
     <string name="toolbar_recherche_globale">Rechercher une bouteille</string>
+    <string name="toolbar_infos_cave">Statistiques</string>
     <string name="toolbar_bouteille_nouvelle">Ajouter une bouteille</string>
     <string name="toolbar_bouteille_modifier">Modifier la bouteille</string>
     <string name="toolbar_bouteille_afficher">Informations</string>
@@ -38,7 +39,11 @@
     <string name="del_bottle">Supprimer la bouteille</string>
     <string name="search_bottle">Rechercher une bouteille</string>
     <string name="content_cellar">Contenu de la cave</string>
+    <string name="infos_cellar">Statistique de la cave</string>
     <string name="drunk_bottles">Bouteilles Dégustées</string>
+    <string name="red">Rouges : </string>
+    <string name="rose">Roses : </string>
+    <string name="white">Blancs : </string>
 
 
     <!-- page nouvelle cave -->
@@ -54,9 +59,17 @@
 
     <!-- page nouvelle cave -->
     <string name="message_modifier_cave_ok">Cave modifiée</string>
-    <string name="message_modifier_cave_ko">ERREUR dans la modification de la cave... Veuillez réessayer</string>
+    <string name="message_modifier_cave_ko">ERREUR dans la modification de la cave… Veuillez réessayer</string>
     <!-- menu nouvelle cave -->
     <string name="save_cellar">Enregistrer</string>
+
+    <!-- page statistiques -->
+    <string name="text_view_stats_in_cellar_colors">bouteilles dans la cave par couleur</string>
+    <string name="text_view_stats_degusted_colors">bouteilles bues par couleur</string>
+
+    <string name="statsNb">Stats par nombre</string>
+    <string name="statsPct">Stats par pourcentage</string>
+
 
     <!-- page options -->
     <string name="text_view_ajouter_pays">Ajouter/Choisir Pays</string>
@@ -106,8 +119,8 @@
     <string name="text_view_row_nb_bouteilles">Nombre de bouteilles : %1$d</string>
     <string name="message_supprimer_clayette_ko_bouteille">Impossible de supprimer : clayette non vide</string>
     <string name="message_supprimer_cave_ko_bouteille">Impossible de supprimer : cave non vide</string>
-    <string name="message_supprimer_clayette_ko">ERREUR dans la suppression de la clayette... Veuillez réessayer</string>
-    <string name="message_modifier_clayette_ko">ERREUR dans la modification de la clayette... Veuillez réessayer</string>
+    <string name="message_supprimer_clayette_ko">ERREUR dans la suppression de la clayette… Veuillez réessayer</string>
+    <string name="message_modifier_clayette_ko">ERREUR dans la modification de la clayette… Veuillez réessayer</string>
     <string name="message_supprimer_clayette_ok">clayette supprimée</string>
 
     <!-- page visualiser clayette (on voit les bouteilles) -->
@@ -140,16 +153,16 @@
     <string name="text_view_bio">Bio</string>
     <string name="message_creation_bouteille_ko_nomDomaine">Merci de renseigner le domaine / château</string>
     <string name="message_creation_bouteille_ko_clayette">Merci de renseigner la cave et la clayette</string>
-    <string name="message_creation_bouteille_ko">ERREUR dans l\'insertion de la bouteille... Veuillez réessayer</string>
+    <string name="message_creation_bouteille_ko">ERREUR dans l\'insertion de la bouteille… Veuillez réessayer</string>
     <string name="message_creation_bouteille_ok">Nouvelle bouteille ajoutée</string>
     <string name="click_to_choose_date_dachat">Cliquer pour choisir</string>
 
     <!-- page modifier bouteille -->
     <string name="modif_bottle">Enregistrer</string>
     <string name="delete_bottle">Supprimer la bouteille</string>
-    <string name="message_modifier_bouteille_ko">ERREUR dans la modification de la bouteille... Veuillez réessayer</string>
+    <string name="message_modifier_bouteille_ko">ERREUR dans la modification de la bouteille… Veuillez réessayer</string>
     <string name="message_modifier_bouteille_ko_memoire">Mémoire insuffisante. Veuillez faire de la place sur le téléphone et réessayer</string>
-    <string name="message_supprimer_bouteille_ko">ERREUR dans la suppression de la bouteille... Veuillez réessayer</string>
+    <string name="message_supprimer_bouteille_ko">ERREUR dans la suppression de la bouteille… Veuillez réessayer</string>
     <string name="message_modifier_bouteille_ok">bouteille modifiée</string>
     <string name="message_supprimer_bouteille_ok">bouteille supprimée</string>
     <string name="text_view_date_degustation">Date de dégustation</string>
